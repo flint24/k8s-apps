@@ -25,5 +25,5 @@ spec:
       volumes:
         - name: memos-data
           hostPath:
-            path: /mnt/Mother/downloads/memos
+            path: /mnt/Father/downloads/memos
             type: Directory
