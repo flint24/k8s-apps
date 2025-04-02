@@ -1,0 +1,26 @@
+immich:
+  persistence:
+    library:
+      existingClaim: immich-pvc
+  metrics:
+    enabled: false
+
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      auth:
+        username: immich
+        database: immich
+        password: immich
+
+redis:
+  enabled: true
+
+machine-learning:
+  enabled: false
+
+server:
+  service:
+    main:
+      type: NodePort
