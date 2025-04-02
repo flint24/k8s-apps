@@ -1,33 +1,12 @@
 immich:
-  persistence:
-    library:
-      enabled: true
-      type: hostPath
-      hostPath: /mnt/Father/Pics
-      mountPath: /usr/src/app/upload
-
   metrics:
     enabled: false
-
-  configuration: {}
-    # Example if needed:
-    # trash:
-    #   enabled: false
-    #   days: 30
-
-server:
-  enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-server
-    tag: v1.119.0
-    pullPolicy: IfNotPresent
-
-  service:
-    main:
-      type: NodePort
-      ports:
-        http:
-          port: 3001
+  configuration:
+    storageTemplate:
+      enabled: true
+      template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
+    trash:
+      enabled: false
 
 machine-learning:
   enabled: false
@@ -37,3 +16,33 @@ postgresql:
 
 redis:
   enabled: false
+
+server:
+  image:
+    repository: ghcr.io/immich-app/immich-server
+    tag: v1.119.0
+  service:
+    main:
+      type: NodePort
+      ports:
+        http:
+          port: 3001
+
+microservices:
+  enabled: true
+
+persistence:
+  library:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/Pics
+    accessMode: ReadWriteOnce
+    size: 500Gi
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - node1
