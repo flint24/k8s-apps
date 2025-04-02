@@ -1,7 +1,8 @@
 immich:
   persistence:
     library:
-      existingClaim: immich-pvc
+      type: hostPath
+      hostPath: /mnt/Father/Pics
   metrics:
     enabled: false
 
@@ -21,6 +22,8 @@ machine-learning:
   enabled: false
 
 server:
+  nodeSelector:
+    kubernetes.io/hostname: node1
   service:
     main:
       type: NodePort
