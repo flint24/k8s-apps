@@ -1,24 +1,14 @@
 immich:
-  persistence: {}
   metrics:
     enabled: false
-  configuration:
-    storageTemplate:
-      enabled: true
-      template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
-    trash:
+
+  persistence:
+    library:
       enabled: false
-
-machine-learning:
-  enabled: false
-
-postgresql:
-  enabled: false
-
-redis:
-  enabled: false
+      existingClaim: "dummy-claim"  # Required by the Helm chart; not actually used
 
 server:
+  enabled: true
   image:
     repository: ghcr.io/immich-app/immich-server
     tag: v1.119.0
@@ -29,21 +19,15 @@ server:
         http:
           port: 3001
 
-microservices:
-  enabled: true
+  volumeMounts:
+    - name: pics
+      mountPath: /usr/src/app/upload
 
-persistence:
-  library:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/Father/Pics
-    accessMode: ReadWriteOnce
-    size: 500Gi
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                  - node1
+machine-learning:
+  enabled: false
+
+volumes:
+  - name: pics
+    hostPath:
+      path: /mnt/Father/Pics
+      type: Directory
