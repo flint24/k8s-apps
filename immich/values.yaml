@@ -1,25 +1,16 @@
-# Disable built-in PostgreSQL and Redis
-postgresql:
-  enabled: false
-
-redis:
-  enabled: false
-
-# Main Immich app settings
 immich:
-  # Mount your existing local folder
-  persistence:
-    library:
-      enabled: true
-      type: hostPath
-      hostPath: /mnt/Father/Pics
-      mountPath: /usr/src/app/upload
-
-  # Optionally configure Immich here (kept minimal)
-  configuration: {}
-
   metrics:
     enabled: false
+  persistence:
+    library:
+      existingClaim: immich-pvc
+  configuration:
+    trash:
+      enabled: true
+      days: 30
+    storageTemplate:
+      enabled: true
+      template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
 
 server:
   enabled: true
@@ -27,30 +18,36 @@ server:
     repository: ghcr.io/immich-app/immich-server
     tag: v1.119.0
     pullPolicy: IfNotPresent
+  ingress:
+    main:
+      enabled: false
   service:
     main:
       type: NodePort
       ports:
         http:
           port: 3001
-          nodePort: 30001 # Optional: ArgoCD may auto-assign
-  ingress:
-    main:
-      enabled: false
-
-web:
-  enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-web
-    tag: v1.119.0
-    pullPolicy: IfNotPresent
-
-microservices:
-  enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-microservices
-    tag: v1.119.0
-    pullPolicy: IfNotPresent
 
 machine-learning:
   enabled: false
+
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      auth:
+        username: immich
+        database: immich
+        password: immich
+  primary:
+    initdb:
+      scripts:
+        create-extensions.sql: |
+          CREATE EXTENSION cube;
+          CREATE EXTENSION earthdistance;
+          CREATE EXTENSION vectors;
+
+redis:
+  enabled: true
+  auth:
+    enabled: false
