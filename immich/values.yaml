@@ -3,9 +3,7 @@ immich:
     enabled: false
   persistence:
     library:
-      enabled: true
-      type: hostPath
-      hostPath: /mnt/Father/Pics
+      existingClaim: immich-pics-pvc
 
 server:
   enabled: true
