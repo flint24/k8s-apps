@@ -1,0 +1,40 @@
+image:
+  repository: ghcr.io/immich-app/immich-server
+  tag: v1.119.0
+  pullPolicy: IfNotPresent
+
+env:
+  DB_HOSTNAME: immich-postgres
+  DB_USERNAME: immich
+  DB_PASSWORD: immich
+  DB_DATABASE_NAME: immich
+  REDIS_HOSTNAME: immich-redis
+  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
+
+persistence:
+  library:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/Pics
+    mountPath: /usr/src/app/upload
+
+server:
+  enabled: true
+  ingress:
+    main:
+      enabled: false
+
+machine-learning:
+  enabled: true
+  image:
+    repository: ghcr.io/immich-app/immich-machine-learning
+    tag: v1.119.0
+  persistence:
+    cache:
+      enabled: false
+
+postgresql:
+  enabled: false
+
+redis:
+  enabled: false
