@@ -1,9 +1,7 @@
 immich:
+  persistence: {}
   metrics:
     enabled: false
-  persistence:
-    library:
-      existingClaim: ""  # <-- override the default template check
   configuration:
     storageTemplate:
       enabled: true
