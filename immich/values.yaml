@@ -1,39 +1,28 @@
 immich:
+  configuration: {}
   metrics:
     enabled: false
   persistence:
     library:
-      existingClaim: immich-pics-pvc
-
-server:
-  enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-server
-    pullPolicy: IfNotPresent
-  service:
-    main:
-      type: NodePort
-      ports:
-        http:
-          port: 3001
-  ingress:
-    main:
-      enabled: false
-
-machine-learning:
-  enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-machine-learning
-    pullPolicy: IfNotPresent
-  persistence:
-    cache:
-      enabled: true
-      size: 10Gi
-      type: emptyDir
-      accessMode: ReadWriteMany
+      existingClaim: immich-pvc
 
 postgresql:
   enabled: false
 
 redis:
   enabled: false
+
+machine-learning:
+  enabled: false
+
+server:
+  enabled: true
+  image:
+    repository: ghcr.io/immich-app/immich-server
+    tag: v1.119.0
+  service:
+    main:
+      type: NodePort
+      ports:
+        http:
+          port: 2283
