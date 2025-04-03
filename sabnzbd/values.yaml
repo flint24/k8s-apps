@@ -3,29 +3,35 @@ image:
   tag: 4.2.2
   pullPolicy: IfNotPresent
 
-service:
-  type: NodePort
-  port: 8080
-  nodePort: 30888
-
-persistence:
-  config:
-    enabled: true
-    type: hostPath
-    mountPath: /config
-    hostPath: /mnt/Father/downloads/sabnzbd/config
-  downloads:
-    enabled: true
-    type: hostPath
-    mountPath: /downloads
-    hostPath: /mnt/Father/downloads/sabnzbd
-
 env:
   TZ: Europe/London
   PUID: 1000
   PGID: 1000
 
+service:
+  main:
+    enabled: true
+    type: NodePort
+    ports:
+      http:
+        port: 8080
+        nodePort: 30888
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/sabnzbd/config
+    mountPath: /config
+
+  downloads:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/sabnzbd
+    mountPath: /downloads
+
 ingress:
-  enabled: false
+  main:
+    enabled: false
 
 resources: {}
