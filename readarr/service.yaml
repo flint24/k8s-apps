@@ -8,6 +8,6 @@ spec:
   selector:
     app: readarr
   ports:
-    - port: 8787
-      targetPort: 8787
-      nodePort: 31787
+    - port: 7878
+      targetPort: 7878
+      nodePort: 31878
