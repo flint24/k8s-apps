@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: readarr
-          image: lscr.io/linuxserver/readarr:version-0.3.19.2413
+          image: lscr.io/linuxserver/readarr:latest
           ports:
             - containerPort: 8787
           volumeMounts:
