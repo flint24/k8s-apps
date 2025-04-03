@@ -3,12 +3,14 @@ kind: Service
 metadata:
   name: overseerr
   namespace: media
+  labels:
+    app.kubernetes.io/name: overseerr
 spec:
   type: NodePort
   selector:
     app.kubernetes.io/name: overseerr
   ports:
-    - port: 5055
+    - name: http
+      port: 5055
       targetPort: 5055
       nodePort: 31055
-      protocol: TCP
