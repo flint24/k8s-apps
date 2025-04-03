@@ -1,26 +1,31 @@
 image:
-  repository: ghcr.io/k8s-at-home/sabnzbd
-  tag: v3.3.1
+  repository: linuxserver/sabnzbd
+  tag: 4.2.2
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30888
 
 persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: /mnt/Father/downloads/sabnzbd/config
     mountPath: /config
-
-service:
-  main:
-    type: NodePort
-    ports:
-      http:
-        port: 8080
+    hostPath: /mnt/Father/downloads/sabnzbd/config
+  downloads:
+    enabled: true
+    type: hostPath
+    mountPath: /downloads
+    hostPath: /mnt/Father/downloads/sabnzbd
 
 env:
-  TZ: "UTC"
+  TZ: Europe/London
+  PUID: 1000
+  PGID: 1000
 
 ingress:
-  main:
-    enabled: false
+  enabled: false
 
 resources: {}
