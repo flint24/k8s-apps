@@ -1,0 +1,22 @@
+image:
+  repository: ghcr.io/linuxserver/readarr
+  tag: v0.3.19.2413-ls193
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8787
+  nodePort: 31789
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+    hostPath: /mnt/Father/downloads/readarr/config
+  data:
+    enabled: true
+    mountPath: /data
+    hostPath: /mnt/Father/downloads/readarr
+
+nodeSelector:
+  kubernetes.io/hostname: node1
