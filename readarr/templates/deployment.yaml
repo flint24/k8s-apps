@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: readarr
-  labels:
-    app: readarr
 spec:
   replicas: 1
   selector:
@@ -14,8 +12,6 @@ spec:
       labels:
         app: readarr
     spec:
-      nodeSelector:
-        {{- toYaml .Values.nodeSelector | nindent 8 }}
       containers:
         - name: readarr
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -31,8 +27,6 @@ spec:
         - name: config
           hostPath:
             path: {{ .Values.persistence.config.hostPath }}
-            type: Directory
         - name: data
           hostPath:
             path: {{ .Values.persistence.data.hostPath }}
-            type: Directory
