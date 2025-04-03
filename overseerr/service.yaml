@@ -8,7 +8,7 @@ spec:
   selector:
     app.kubernetes.io/name: overseerr
   ports:
-    - name: http
-      port: 5055
+    - port: 5055
       targetPort: 5055
-      nodePort: 30555
+      nodePort: 31055
+      protocol: TCP
