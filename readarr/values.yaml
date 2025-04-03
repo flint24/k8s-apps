@@ -1,0 +1,13 @@
+image:
+  repository: ghcr.io/linuxserver/readarr
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 7878
+  nodePort: 31788
+
+persistence:
+  configPath: /mnt/Father/downloads/readarr/config
+  dataPath: /mnt/Father/downloads/readarr
