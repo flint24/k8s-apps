@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sabnzbd
+  labels:
+    app.kubernetes.io/name: sabnzbd
+spec:
+  type: {{ .Values.service.main.type }}
+  selector:
+    app.kubernetes.io/name: sabnzbd
+  ports:
+    - name: http
+      port: {{ .Values.service.main.ports.http.port }}
+      targetPort: http
+      nodePort: 30080
