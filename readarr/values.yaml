@@ -1,6 +1,6 @@
 image:
   repository: lscr.io/linuxserver/readarr
-  tag: latest
+  tag: 0.3.27-develop
   pullPolicy: IfNotPresent
 
 service:
@@ -9,5 +9,11 @@ service:
   nodePort: 31788
 
 persistence:
-  configPath: /mnt/Father/downloads/readarr/config
-  dataPath: /mnt/Father/downloads/readarr
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/readarr/config
+  data:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/readarr
