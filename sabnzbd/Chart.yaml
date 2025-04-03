@@ -1,6 +1,7 @@
+# sabnzbd/Chart.yaml
 apiVersion: v2
 name: sabnzbd
-description: Sabnzbd manual chart
+description: A Helm chart for deploying Sabnzbd
 type: application
 version: 0.1.0
-appVersion: latest
+appVersion: "3.7.2"

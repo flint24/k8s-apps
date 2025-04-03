@@ -1,18 +1,15 @@
-kimage:
+image:
   repository: linuxserver/sabnzbd
   tag: latest
   pullPolicy: IfNotPresent
 
 service:
-  main:
-    type: NodePort
-    ports:
-      http:
-        port: 8080
+  type: NodePort
+  port: 8080
+  nodePort: 30080
 
 persistence:
   config:
     enabled: true
-    type: hostPath
     mountPath: /config
     hostPath: /mnt/Father/downloads/sabnzbd
