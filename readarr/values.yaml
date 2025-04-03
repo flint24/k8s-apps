@@ -1,5 +1,5 @@
 image:
-  repository: lscr.io/linuxserver/readarr
+  repository: ghcr.io/linuxserver/readarr:develop
   tag: 0.3.27-develop
   pullPolicy: IfNotPresent
 

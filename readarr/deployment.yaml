@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readarr
+  namespace: media
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readarr
+  template:
+    metadata:
+      labels:
+        app: readarr
+    spec:
+      containers:
+        - name: readarr
+          image: ghcr.io/linuxserver/readarr:v0.3.19.2413-ls193
+          ports:
+            - containerPort: 8787
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          hostPath:
+            path: /mnt/Father/downloads/readarr/config
+            type: Directory
+        - name: data
+          hostPath:
+            path: /mnt/Father/downloads/readarr
+            type: Directory
