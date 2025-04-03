@@ -1,15 +1,9 @@
 image:
   repository: linuxserver/sabnzbd
   tag: latest
-  pullPolicy: IfNotPresent
-
-service:
-  type: NodePort
-  port: 8080
-  nodePort: 30080
 
 persistence:
   config:
-    enabled: true
-    mountPath: /config
+    hostPath: /mnt/Father/downloads/sabnzbd/config
+  downloads:
     hostPath: /mnt/Father/downloads/sabnzbd
