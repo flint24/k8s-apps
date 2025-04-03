@@ -1,9 +1,26 @@
 image:
-  repository: linuxserver/sabnzbd
-  tag: latest
+  repository: ghcr.io/k8s-at-home/sabnzbd
+  tag: v3.3.1
 
 persistence:
   config:
+    enabled: true
+    type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd/config
-  downloads:
-    hostPath: /mnt/Father/downloads/sabnzbd
+    mountPath: /config
+
+service:
+  main:
+    type: NodePort
+    ports:
+      http:
+        port: 8080
+
+env:
+  TZ: "UTC"
+
+ingress:
+  main:
+    enabled: false
+
+resources: {}
