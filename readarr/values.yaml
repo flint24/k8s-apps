@@ -1,6 +1,6 @@
 image:
-  repository: ghcr.io/linuxserver/readarr
-  tag: v0.3.19.2413-ls193
+  repository: lscr.io/linuxserver/readarr
+  tag: 0.3.19.2413-ls193
   pullPolicy: IfNotPresent
 
 service:
