@@ -1,0 +1,5 @@
+ports:
+  - port: 8787
+    targetPort: 8787
+    protocol: TCP
+    nodePort: 32111  # 👈 Add this back
