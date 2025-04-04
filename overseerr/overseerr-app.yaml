@@ -1,4 +1,3 @@
-# ~/k8s-apps/overseerr/overseerr-app.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -33,7 +32,7 @@ spec:
             mountPath: /config
 
         env:
-          TZ: Europe/Berlin
+          TZ: Europe/London
           LOG_LEVEL: info
   destination:
     server: https://kubernetes.default.svc
