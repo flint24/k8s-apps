@@ -1,19 +1,23 @@
 image:
   repository: ghcr.io/linuxserver/overseerr
-  tag: latest
+  tag: 1.33.2 # Or latest
   pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
-  port: 5055
+  main:
+    type: NodePort
+    ports:
+      http:
+        port: 5055
+        nodePort: 31055
 
 persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: /mnt/Father/downloads/overseerr/config
+    hostPath: /mnt/Father/downloads/overseerr
     mountPath: /config
 
-resources: {}
-nodeSelector:
-  kubernetes.io/hostname: node1
+env:
+  TZ: Europe/London
+  LOG_LEVEL: info
