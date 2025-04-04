@@ -1,0 +1,30 @@
+image:
+  repository: linuxserver/readarr
+  tag: 0.4.14-nightly
+  pullPolicy: IfNotPresent
+
+service:
+  main:
+    type: NodePort
+    ports:
+      http:
+        port: 8787
+        nodePort: 31087
+
+env:
+  TZ: Europe/London
+  PUID: 1000
+  PGID: 1000
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/readarr/config
+    mountPath: /config
+
+  data:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/readarr
+    mountPath: /data
