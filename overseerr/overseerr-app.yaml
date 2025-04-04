@@ -1,3 +1,4 @@
+# ~/k8s-apps/overseerr/overseerr-app.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -10,8 +11,30 @@ spec:
     chart: overseerr
     targetRevision: 5.4.2
     helm:
-      valueFiles:
-        - values.yaml
+      values: |
+        image:
+          repository: ghcr.io/linuxserver/overseerr
+          tag: 1.33.2
+          pullPolicy: IfNotPresent
+
+        service:
+          main:
+            type: NodePort
+            ports:
+              http:
+                port: 5055
+                nodePort: 31055
+
+        persistence:
+          config:
+            enabled: true
+            type: hostPath
+            hostPath: /mnt/Father/downloads/overseerr
+            mountPath: /config
+
+        env:
+          TZ: Europe/Berlin
+          LOG_LEVEL: info
   destination:
     server: https://kubernetes.default.svc
     namespace: media
