@@ -4,7 +4,8 @@ image:
   pullPolicy: IfNotPresent
 
 env:
-  TZ: Europe/London
+  TZ: Europe/Berlin
+  HOST_WHITELIST: "*"
   PUID: 1000
   PGID: 1000
 
