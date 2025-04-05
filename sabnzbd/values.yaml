@@ -4,16 +4,21 @@ image:
   pullPolicy: IfNotPresent
 
 env:
-  TZ: Europe/Berlin
+  TZ: Europe/London
   HOST_WHITELIST: "*"
-  LOG_LEVEL: info
   CONFIG_FILE: /config/sabnzbd.ini
   PUID: 1000
   PGID: 1000
+  UMASK: "000"
+  DOCKER_MODS: linuxserver/mods:universal-no-healthcheck
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
 
 service:
   main:
-    enabled: true
     type: NodePort
     ports:
       http:
@@ -25,16 +30,10 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd/config
-    mountPath: /config  # ✅ this is critical
-    readOnly: false
+    mountPath: /config
 
   data:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd
     mountPath: /data
-ingress:
-  main:
-    enabled: false
-
-resources: {}
