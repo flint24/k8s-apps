@@ -1,24 +1,21 @@
 image:
-  repository: linuxserver/sabnzbd
-  tag: 4.2.2
+  repository: ghcr.io/linuxserver/sabnzbd
+  tag: latest
   pullPolicy: IfNotPresent
-
-env:
-  TZ: Europe/Berlin
-  HOST_WHITELIST: "*"
-  LOG_LEVEL: info
-  CONFIG_FILE: /config/sabnzbd.ini
-  PUID: 1000
-  PGID: 1000
 
 service:
   main:
-    enabled: true
     type: NodePort
     ports:
       http:
         port: 8080
-        nodePort: 30888
+        nodePort: 32573
+
+env:
+  TZ: Europe/Berlin
+  PUID: 1000
+  PGID: 1000
+  HOST_WHITELIST: "*,node4"
 
 persistence:
   config:
@@ -26,15 +23,3 @@ persistence:
     type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd/config
     mountPath: /config
-
-  downloads:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/Father/downloads/sabnzbd
-    mountPath: /downloads
-
-ingress:
-  main:
-    enabled: false
-
-resources: {}
