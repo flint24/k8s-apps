@@ -29,9 +29,8 @@ persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: /mnt/Father/downloads/sabnzbd/config
+    hostPath: /mnt/local-volumes/sabnzbd/config
     mountPath: /config
-
   data:
     enabled: true
     type: hostPath
