@@ -26,6 +26,7 @@ persistence:
     type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd/config
     mountPath: /config  # ✅ this is critical
+    readOnly: false
 
   data:
     enabled: true
