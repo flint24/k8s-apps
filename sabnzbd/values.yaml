@@ -25,14 +25,13 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd/config
-    mountPath: /config
+    mountPath: /config  # ✅ this is critical
 
-  downloads:
+  data:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd
-    mountPath: /downloads
-
+    mountPath: /data
 ingress:
   main:
     enabled: false
