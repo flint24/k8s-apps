@@ -1,0 +1,53 @@
+name: pull-request-validation
+
+on:
+  pull_request:
+    branches:
+      - main
+      - feature/pr-action
+
+jobs:
+  build_lint_validate_diff:
+    name: lint, validate and diff from main
+    permissions: write-all
+    runs-on: ubuntu-latest
+    container:
+      image: alpine/helm:3.17.2@sha256:b80eb190fca14707e94a5090235a3f1bf2f206f26761f2890d16a1e570386236
+    steps:
+      - name: checkout pr head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: install chart dependencies
+        run: helm dependency build charts/immich
+
+      - name: lint helm chart
+        run: helm lint charts/immich --set immich.persistence.library.existingClaim=test-pvc --set redis.enabled=true
+
+      - name: prepare
+        run: mkdir -p charts/immich/build
+      - name: create full manifest from pr head
+        run: helm template immich charts/immich --set immich.persistence.library.existingClaim=test-pvc --set redis.enabled=true | tee charts/immich/build/manifest.yaml
+
+      - name: checkout main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+          ref: main
+          path: main
+
+      - name: install chart dependencies
+        run: helm dependency build main/charts/immich
+
+      - name: prepare
+        run: mkdir -p main/charts/immich/build
+      - name: create full manifest from main
+        run: helm template immich main/charts/immich --set immich.persistence.library.existingClaim=test-pvc --set redis.enabled=true | tee main/charts/immich/build/manifest.yaml
+
+      - name: create diff comment
+        uses: int128/diff-action@1a147f34a49636aafdb862075055908e06edaaa7 # v1
+        with:
+          base: main/charts/immich/build
+          head: charts/immich/build
+          comment-header: "## Changes in Final Manifest"
