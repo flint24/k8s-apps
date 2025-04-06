@@ -1,0 +1,14 @@
+image:
+  registry: docker.io
+  repository: tensorchord/pgvecto-rs
+  tag: pg14-v0.1.11
+
+auth:
+  postgresPassword: fYCcHNZtHM
+  database: immich
+
+primary:
+  service:
+    type: ClusterIP
+
+fullnameOverride: immich-postgresql

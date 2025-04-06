@@ -1,0 +1,13 @@
+postgresql:
+  auth:
+    postgresPassword: fYCcHNZtHM
+    database: immich
+
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+    service:
+      type: ClusterIP
+
+fullnameOverride: immich-postgresql
