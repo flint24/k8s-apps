@@ -3,14 +3,13 @@ immich:
     enabled: false
   env:
     DB_PORT: 5432
-    DB_USERNAME: immich
-    DB_PASSWORD: immichpass
+    DB_USERNAME: postgres  # likely default
+    DB_PASSWORD: JrjDVn5S4Y  # <-- update this
     DB_DATABASE_NAME: immich
-    REDIS_HOSTNAME: immich-redis
+    DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
+    REDIS_HOSTNAME: immich-redis-master  # <-- fix from earlier
     IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003
     NODE_ENV: production
-    DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
-
   persistence:
     library:
       enabled: false
