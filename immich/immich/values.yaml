@@ -1,15 +1,6 @@
 immich:
   metrics:
     enabled: false
-  env:
-    DB_PORT: 5432
-    DB_USERNAME: postgres
-    DB_PASSWORD: RN3YhUS9U7S
-    DB_DATABASE_NAME: immich
-    DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
-    REDIS_HOSTNAME: immich-redis-master
-    IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003
-    NODE_ENV: production
   persistence:
     library:
       enabled: false
@@ -20,6 +11,15 @@ server:
   image:
     repository: ghcr.io/immich-app/immich-server
     tag: v1.119.0
+  env:
+    DB_PORT: 5432
+    DB_USERNAME: postgres
+    DB_PASSWORD: RN3YhUS9U7S
+    DB_DATABASE_NAME: immich
+    DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
+    REDIS_HOSTNAME: immich-redis-master
+    IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003
+    NODE_ENV: production
   service:
     main:
       type: NodePort
@@ -38,11 +38,28 @@ server:
     - name: pics
       mountPath: /usr/src/app/upload
 
-volumes:
-  - name: pics
-    hostPath:
-      path: /mnt/Father/Pics
-      type: Directory
+microservices:
+  enabled: true
+  env:
+    DB_PORT: 5432
+    DB_USERNAME: postgres
+    DB_PASSWORD: RN3YhUS9U7S
+    DB_DATABASE_NAME: immich
+    DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
+    REDIS_HOSTNAME: immich-redis-master
+    IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003
+    NODE_ENV: production
+
+machine-learning:
+  enabled: false
+  env:
+    DB_PORT: 5432
+    DB_USERNAME: postgres
+    DB_PASSWORD: RN3YhUS9U7S
+    DB_DATABASE_NAME: immich
+    DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
+    REDIS_HOSTNAME: immich-redis-master
+    NODE_ENV: production
 
 postgresql:
   enabled: true
@@ -51,5 +68,8 @@ postgresql:
     password: RN3YhUS9U7S
     database: immich
 
-machine-learning:
-  enabled: false
+volumes:
+  - name: pics
+    hostPath:
+      path: /mnt/Father/Pics
+      type: Directory
