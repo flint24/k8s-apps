@@ -28,6 +28,15 @@ server:
     NODE_ENV: production
     DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
 
+  startupProbe:
+    httpGet:
+      path: /api/server/ping
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 30  # <-- was probably much lower before
+
   volumeMounts:
     - name: pics
       mountPath: /usr/src/app/upload
