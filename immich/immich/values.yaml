@@ -3,17 +3,17 @@ immich:
     enabled: false
   env:
     DB_PORT: 5432
-    DB_USERNAME: postgres  # likely default
-    DB_PASSWORD: RN3XuS9U7S  # <-- update this
+    DB_USERNAME: postgres
+    DB_PASSWORD: RN3YhUS9U7S
     DB_DATABASE_NAME: immich
     DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
-    REDIS_HOSTNAME: immich-redis-master  # <-- fix from earlier
+    REDIS_HOSTNAME: immich-redis-master
     IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003
     NODE_ENV: production
   persistence:
     library:
       enabled: false
-      existingClaim: "dummy-claim"  # Required by the Helm chart; not actually used
+      existingClaim: "dummy-claim"
 
 server:
   enabled: true
@@ -26,7 +26,6 @@ server:
       ports:
         http:
           port: 3001
-
   startupProbe:
     httpGet:
       path: /api/server/ping
@@ -34,17 +33,23 @@ server:
     initialDelaySeconds: 10
     periodSeconds: 5
     timeoutSeconds: 2
-    failureThreshold: 30  # <-- was probably much lower before
-
+    failureThreshold: 30
   volumeMounts:
     - name: pics
       mountPath: /usr/src/app/upload
-
-machine-learning:
-  enabled: false
 
 volumes:
   - name: pics
     hostPath:
       path: /mnt/Father/Pics
       type: Directory
+
+postgresql:
+  enabled: true
+  auth:
+    username: postgres
+    password: RN3YhUS9U7S
+    database: immich
+
+machine-learning:
+  enabled: false
