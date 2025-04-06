@@ -5,6 +5,7 @@ image:
 
 service:
   main:
+    enabled: true
     type: NodePort
     ports:
       http:

@@ -1,23 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: readarr
+  name: sabnzbd
+  namespace: argocd
 spec:
-  destination:
-    namespace: media
-    server: https://kubernetes.default.svc
   project: default
   source:
     repoURL: https://k8s-at-home.com/charts/
-    targetRevision: 6.4.2
-    chart: readarr
+    chart: sabnzbd
+    targetRevision: 9.4.2
     helm:
       valueFiles:
         - values.yaml
-    kustomize:
-      patches:
-        - path: readarr/patch-service.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
