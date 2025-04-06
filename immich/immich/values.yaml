@@ -4,7 +4,7 @@ immich:
   env:
     DB_PORT: 5432
     DB_USERNAME: postgres  # likely default
-    DB_PASSWORD: JrjDVn5S4Y  # <-- update this
+    DB_PASSWORD: RN3XuS9U7S  # <-- update this
     DB_DATABASE_NAME: immich
     DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
     REDIS_HOSTNAME: immich-redis-master  # <-- fix from earlier
