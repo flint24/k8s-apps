@@ -27,6 +27,7 @@ server:
     DB_DATABASE_NAME: immich
     DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
     REDIS_HOSTNAME: immich-redis-master
+    REDIS_PASSWORD: zGltO4nlXp
     IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003
     NODE_ENV: production
 
