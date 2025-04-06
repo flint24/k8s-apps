@@ -6,6 +6,9 @@ immich:
       enabled: false
       existingClaim: "dummy-claim"
 
+postgresql:
+  enabled: false
+
 server:
   enabled: true
   image:
