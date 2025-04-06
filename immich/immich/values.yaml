@@ -69,6 +69,11 @@ microservices:
 machine-learning:
   enabled: false
 
+redis:
+  enabled: true
+  auth:
+    enabled: false
+
 volumes:
   - name: pics
     hostPath:
