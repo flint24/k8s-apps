@@ -79,7 +79,3 @@ volumes:
     hostPath:
       path: /mnt/Father/Pics
       type: Directory
-postgresql:
-  enabled: true
-  auth:
-    postgresPassword: LxUy6TbupI
