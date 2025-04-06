@@ -11,7 +11,7 @@ server:
   image:
     repository: ghcr.io/immich-app/immich-server
     tag: v1.119.0
-  env:
+  envVariables:
     DB_PORT: 5432
     DB_USERNAME: postgres
     DB_PASSWORD: RN3YhUS9U7S
@@ -40,7 +40,7 @@ server:
 
 microservices:
   enabled: true
-  env:
+  envVariables:
     DB_PORT: 5432
     DB_USERNAME: postgres
     DB_PASSWORD: RN3YhUS9U7S
