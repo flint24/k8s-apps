@@ -23,7 +23,7 @@ server:
   env:
     DB_PORT: 5432
     DB_USERNAME: postgres              # Match the default from immich-postgresql chart
-    DB_PASSWORD: postgres              # Match the default from immich-postgresql chart
+    DB_PASSWORD: u9FNA6p6D9              # Match the default from immich-postgresql chart
     DB_DATABASE_NAME: immich
     DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
     REDIS_HOSTNAME: immich-redis-master
