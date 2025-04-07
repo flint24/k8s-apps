@@ -1,11 +1,12 @@
 immich:
   metrics:
     enabled: false
-
   persistence:
     library:
-      enabled: false
-      existingClaim: "dummy-claim"  # Required by the Helm chart; not actually used
+      enabled: true
+      existingClaim: dummy-immich-library
+      accessMode: ReadWriteOnce
+      size: 1Mi
 
 server:
   enabled: true
@@ -22,13 +23,12 @@ server:
 
   env:
     DB_PORT: 5432
-    DB_USERNAME: postgres              # Match the default from immich-postgresql chart
-    DB_PASSWORD: u9FNA6p6D9              # Match the default from immich-postgresql chart
+    DB_USERNAME: postgres
+    DB_PASSWORD: u9FNA6p6D9
     DB_DATABASE_NAME: immich
     DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
     REDIS_HOSTNAME: immich-redis-master
     REDIS_PASSWORD: zGltO4nlXp
-    IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003
     NODE_ENV: production
 
   startupProbe:
@@ -44,8 +44,29 @@ server:
     - name: pics
       mountPath: /usr/src/app/upload
 
+microservices:
+  enabled: true
+  env:
+    DB_PORT: 5432
+    DB_USERNAME: postgres
+    DB_PASSWORD: u9FNA6p6D9
+    DB_DATABASE_NAME: immich
+    DB_HOSTNAME: immich-postgresql.immich.svc.cluster.local
+    REDIS_HOSTNAME: immich-redis-master
+    REDIS_PASSWORD: zGltO4nlXp
+    NODE_ENV: production
+
 machine-learning:
   enabled: false
+
+postgresql:
+  enabled: false
+
+redis:
+  enabled: false
+  auth:
+    enabled: true
+    password: zGltO4nlXp
 
 volumes:
   - name: pics
