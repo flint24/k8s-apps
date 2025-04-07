@@ -31,6 +31,15 @@ server:
   volumeMounts:
     - name: pics
       mountPath: /usr/src/app/upload
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - node1
 
 microservices:
   enabled: true
@@ -43,6 +52,15 @@ microservices:
     REDIS_HOSTNAME: immich-redis-master
     REDIS_PASSWORD: zGltO4nlXp
     NODE_ENV: production
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - node1
 
 machine-learning:
   enabled: false

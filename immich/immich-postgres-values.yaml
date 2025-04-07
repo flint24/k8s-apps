@@ -1,16 +1,46 @@
-auth:
-  username: postgres
-  password: u9FNA6p6D9
-  database: immich
-
-volumePermissions:
-  enabled: true
+global:
+  security:
+    allowInsecureImages: true
 
 image:
-  repository: bitnami/postgresql
-  tag: 16.3.0-debian-12-r10
+  registry: docker.io
+  repository: tensorchord/pgvecto-rs
+  tag: pg16-v0.2.0
+  pullPolicy: IfNotPresent
+
+volumePermissions:
+  enabled: false
+
+primary:
+  name: postgresql
+  containerSecurityContext:
+    enabled: false
+  podSecurityContext:
+    enabled: false
+
+  service:
+    ports:
+      postgresql: 5432
+
+  extraEnvVars:
+    - name: PGDATA
+      value: /var/lib/postgresql/data
 
   persistence:
     enabled: true
+    mountPath: /var/lib/postgresql
     storageClass: longhorn-2replicas
     size: 8Gi
+
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 256Mi
+      cpu: 200m
+
+auth:
+  enablePostgresUser: true
+  postgresPassword: u9FNA6p6D9
+  database: immich
