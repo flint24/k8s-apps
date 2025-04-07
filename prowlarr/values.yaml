@@ -1,0 +1,27 @@
+# prowlarr/values.yaml
+
+persistence:
+  enabled: true
+  config:
+    mountPath: /config
+    hostPath: /mnt/Father/downloads/prowlarr/config
+  data:
+    mountPath: /data
+    hostPath: /mnt/Father/downloads/prowlarr
+
+image:
+  repository: ghcr.io/prowlarr/prowlarr
+  tag: latest
+
+service:
+  type: NodePort
+  port: 9696
+  nodePort: 31000  # Adjust as necessary
+
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
