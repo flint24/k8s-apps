@@ -1,6 +1,9 @@
 immich:
   metrics:
     enabled: false
+  persistence:
+    library:
+      enabled: false
 
 server:
   enabled: true
@@ -55,8 +58,3 @@ volumes:
     hostPath:
       path: /mnt/Father/Pics
       type: Directory
-
-immich:
-  persistence:
-    library:
-      enabled: false
