@@ -1,28 +1,28 @@
+controller:
+  type: deployment
+
 image:
-  repository: ghcr.io/bjw-s/prowlarr
-  tag: v1.12.3.4056
-  pullPolicy: IfNotPresent
+  repository: linuxserver/prowlarr
+  tag: 1.14.0
 
 env:
-  TZ: America/New_York
+  TZ: Europe/Berlin
 
 service:
   main:
+    enabled: true
+    controller: main
     ports:
       http:
         port: 9696
+    type: NodePort
 
 persistence:
   config:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/prowlarr/config
-    mountPath: /config
-
   data:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/prowlarr
-    mountPath: /data
-
-resources: {}
