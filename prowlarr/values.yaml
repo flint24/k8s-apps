@@ -1,19 +1,16 @@
 image:
-  repository: linuxserver/prowlarr
-  tag: develop
+  repository: ghcr.io/bjw-s/prowlarr
+  tag: v1.12.3.4056
+  pullPolicy: IfNotPresent
 
 env:
-  TZ: "Europe/Berlin"
+  TZ: America/New_York
 
 service:
   main:
-    enabled: true
-    type: NodePort
     ports:
       http:
-        enabled: true
         port: 9696
-        nodePort: 30996
 
 persistence:
   config:
@@ -21,16 +18,11 @@ persistence:
     type: hostPath
     hostPath: /mnt/Father/downloads/prowlarr/config
     mountPath: /config
+
   data:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/prowlarr
     mountPath: /data
 
-nodeSelector:
-  kubernetes.io/hostname: node1
-
-podSecurityContext:
-  runAsUser: 568
-  runAsGroup: 568
-  fsGroup: 568
+resources: {}
