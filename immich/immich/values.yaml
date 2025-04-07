@@ -4,7 +4,7 @@ immich:
   persistence:
     library:
       enabled: false
-
+      existingClaim: dummy-claim
 server:
   enabled: true
   image:
