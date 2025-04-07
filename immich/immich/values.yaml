@@ -55,3 +55,8 @@ volumes:
     hostPath:
       path: /mnt/Father/Pics
       type: Directory
+
+immich:
+  persistence:
+    library:
+      enabled: false
