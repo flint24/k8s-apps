@@ -39,3 +39,10 @@ persistence:
     mountPath: /incomplete
 
 resources: {}
+
+ports:
+  web:
+    enabled: true
+    port: 9091
+    protocol: TCP
+    targetPort: 9091
