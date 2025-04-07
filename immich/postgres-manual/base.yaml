@@ -1,25 +1,49 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: immich-postgresql
-  namespace: argocd
+  labels:
+    app: immich-postgresql
 spec:
-  project: default
-
-  source:
-    repoURL: https://github.com/flint24/k8s-apps.git
-    targetRevision: HEAD
-    path: immich/postgres-manual
-    directory:
-      recurse: true
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: immich
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  serviceName: "immich-postgresql"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: immich-postgresql
+  template:
+    metadata:
+      labels:
+        app: immich-postgresql
+    spec:
+      containers:
+        - name: postgres
+          image: tensorchord/pgvecto-rs:pg16-v0.2.0
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: immich
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: u9FNA6p6D9
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: data
+      volumes:
+        - name: data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich-postgresql
+  labels:
+    app: immich-postgresql
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: immich-postgresql
