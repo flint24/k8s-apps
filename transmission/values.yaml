@@ -1,0 +1,41 @@
+image:
+  repository: linuxserver/transmission
+  tag: 3.00-r8-ls210
+  pullPolicy: IfNotPresent
+
+env:
+  TRANSMISSION_INCOMPLETE_DIR: /incomplete
+  TRANSMISSION_INCOMPLETE_DIR_ENABLED: true
+  TRANSMISSION_WATCH_DIR: /watch
+
+service:
+  type: NodePort
+  port: 9091
+  nodePort: 30911
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/transmission/config
+    mountPath: /config
+
+  downloads:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/transmission
+    mountPath: /downloads
+
+  watch:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/transmission/watch
+    mountPath: /watch
+
+  incomplete:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/transmission/incomplete
+    mountPath: /incomplete
+
+resources: {}
