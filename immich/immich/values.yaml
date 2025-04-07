@@ -2,11 +2,11 @@ immich:
   metrics:
     enabled: false
   persistence:
-    library:
-      enabled: true
-      existingClaim: dummy-immich-library
-      accessMode: ReadWriteOnce
-      size: 1Mi
+  library:
+    enabled: true
+    existingClaim: dummy-immich-library  # ✅ make sure this is correct
+    accessMode: ReadWriteOnce
+    size: 1Mi
 
 server:
   enabled: true

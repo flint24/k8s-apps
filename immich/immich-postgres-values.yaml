@@ -1,32 +1,16 @@
-global:
-  security:
-    allowInsecureImages: true
-
-image:
-  repository: pgvector/pgvector
-  tag: latest
-  pullPolicy: IfNotPresent
-
 auth:
-  enablePostgresUser: true
-  postgresPassword: u9FNA6p6D9
   username: postgres
   password: u9FNA6p6D9
   database: immich
 
-primary:
-  nameOverride: immich-postgresql
+volumePermissions:
+  enabled: true
+
+image:
+  repository: bitnami/postgresql
+  tag: 16.3.0-debian-12-r10
+
   persistence:
     enabled: true
-    storageClass: ""
-    accessModes:
-      - ReadWriteOnce
+    storageClass: longhorn-2replicas
     size: 8Gi
-
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 250m
-    limits:
-      memory: 512Mi
-      cpu: 500m
