@@ -5,19 +5,20 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: immich
   source:
-    repoURL: https://github.com/your-username/your-k8s-gitops-repo
+    repoURL: https://github.com/flint24/k8s-apps.git  # Change if needed
     targetRevision: HEAD
-    path: immich/immich  # This should be the folder containing the Immich Helm chart
+    path: immich/immich
     helm:
       valueFiles:
         - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: immich
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
