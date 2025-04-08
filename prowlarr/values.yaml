@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: linuxserver/prowlarr
-          tag: 1.14.0
+          tag: "1.14.0"  # <- ADD QUOTES
         env:
           TZ: Europe/Berlin
         resources: {}
