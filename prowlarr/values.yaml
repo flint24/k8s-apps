@@ -4,9 +4,9 @@ controllers:
       main:
         image:
           repository: linuxserver/prowlarr
-          tag: "1.14.0"  # <- ADD QUOTES
+          tag: "1.14.0"
         env:
-          TZ: Europe/Berlin
+          TZ: "Europe/Berlin"
         resources: {}
 
 service:
@@ -32,6 +32,5 @@ persistence:
     globalMounts:
       - path: /data
 
-# Optional: pin it to node1
 nodeSelector:
   kubernetes.io/hostname: node1
