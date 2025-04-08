@@ -1,16 +1,16 @@
-controller:
-  type: deployment
-
-image:
-  repository: linuxserver/prowlarr
-  tag: 1.14.0
-
-env:
-  TZ: Europe/Berlin
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: linuxserver/prowlarr
+          tag: 1.14.0
+        env:
+          TZ: Europe/Berlin
+        resources: {}
 
 service:
   main:
-    enabled: true
     controller: main
     ports:
       http:
@@ -22,7 +22,11 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/prowlarr/config
+    globalMounts:
+      - path: /config
   data:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/prowlarr
+    globalMounts:
+      - path: /data
