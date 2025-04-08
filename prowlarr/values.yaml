@@ -16,6 +16,7 @@ service:
       http:
         port: 9696
     type: NodePort
+    nodePort: 31000
 
 persistence:
   config:
@@ -30,3 +31,7 @@ persistence:
     hostPath: /mnt/Father/downloads/prowlarr
     globalMounts:
       - path: /data
+
+# Optional: pin it to node1
+nodeSelector:
+  kubernetes.io/hostname: node1
