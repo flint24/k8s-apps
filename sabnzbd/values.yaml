@@ -12,7 +12,7 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  main:
+  web:
     enabled: true
     type: NodePort
     ports:
