@@ -3,12 +3,12 @@ env:
   HOST_WHITELIST: "*"
   PGID: 1000
   PUID: 1000
-  TZ: Europe/London
+  TZ: Europe/Berlin
   UMASK: "000"
 
 image:
   repository: linuxserver/sabnzbd
-  tag: 4.2.2
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
@@ -37,11 +37,11 @@ persistence:
     mountPath: /data
 
   downloads:
-    enabled: false
+    enabled: true
     mountPath: /downloads
 
   media:
-    enabled: false
+    enabled: true
     mountPath: /media
 
 securityContext:
