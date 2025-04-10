@@ -12,8 +12,9 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  web:
+  main:
     enabled: true
+    controller: sabnzbd
     type: NodePort
     ports:
       http:
