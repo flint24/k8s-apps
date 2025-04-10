@@ -13,14 +13,7 @@ image:
 
 service:
   main:
-    enabled: true
-    controller: sabnzbd
-    type: NodePort
-    ports:
-      http:
-        enabled: true
-        port: 8080
-        nodePort: 30888
+    enabled: false
 
 ingress:
   main:
