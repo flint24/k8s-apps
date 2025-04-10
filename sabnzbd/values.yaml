@@ -1,6 +1,5 @@
 env:
   CONFIG_FILE: /config/sabnzbd.ini
-  DOCKER_MODS: linuxserver/mods:universal-no-healthcheck
   HOST_WHITELIST: "*"
   PGID: 1000
   PUID: 1000
