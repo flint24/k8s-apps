@@ -18,6 +18,7 @@ service:
       http:
         port: 8080
         nodePort: 30888
+        targetPort: 8080
 
 ingress:
   main:
@@ -75,3 +76,6 @@ probes:
     initialDelaySeconds: 30
     periodSeconds: 5
     failureThreshold: 20
+
+nodeSelector:
+  kubernetes.io/hostname: node1
