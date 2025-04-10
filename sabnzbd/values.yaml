@@ -13,12 +13,12 @@ image:
 
 service:
   main:
+    enabled: true
     type: NodePort
     ports:
       http:
         port: 8080
         nodePort: 30888
-        targetPort: 8080
 
 ingress:
   main:
