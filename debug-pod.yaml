@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-pod
+  namespace: immich
+spec:
+  containers:
+  - name: debug-container
+    image: busybox
+    command:
+    - sleep
+    - "3600"
+    volumeMounts:
+    - mountPath: /mnt/volume
+      name: library
+  volumes:
+  - name: library
+    persistentVolumeClaim:
+      claimName: immich-new-claim
