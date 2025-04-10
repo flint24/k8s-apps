@@ -3,33 +3,25 @@ env:
   HOST_WHITELIST: "*"
   PGID: 1000
   PUID: 1000
-  TZ: Europe/London
+  TZ: Europe/Berlin
   UMASK: "000"
 
 image:
   repository: linuxserver/sabnzbd
-  tag: 4.2.2
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
   main:
-    type: ClusterIP
+    type: NodePort
     ports:
       http:
         port: 8080
+        nodePort: 30888
 
 ingress:
   main:
-    enabled: true
-    ingressClassName: nginx
-    annotations:
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    hosts:
-      - host: sabnzbd.local
-        paths:
-          - path: /
-            pathType: Prefix
-    tls: []
+    enabled: false
 
 persistence:
   config:
@@ -45,7 +37,9 @@ persistence:
     mountPath: /data
 
   downloads:
-    enabled: false
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/sabnzbd
     mountPath: /downloads
 
   media:
@@ -58,10 +52,26 @@ securityContext:
   runAsUser: 1000
 
 probes:
+  liveness:
+    enabled: true
+    path: /
+    port: 8080
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    failureThreshold: 5
+
+  readiness:
+    enabled: true
+    path: /
+    port: 8080
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    failureThreshold: 5
+
   startup:
     enabled: true
     path: /
     port: 8080
     initialDelaySeconds: 30
-    periodSeconds: 10
+    periodSeconds: 5
     failureThreshold: 20
