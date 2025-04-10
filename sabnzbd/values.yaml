@@ -1,21 +1,16 @@
+env:
+  CONFIG_FILE: /config/sabnzbd.ini
+  DOCKER_MODS: linuxserver/mods:universal-no-healthcheck
+  HOST_WHITELIST: "*"
+  PGID: 1000
+  PUID: 1000
+  TZ: Europe/London
+  UMASK: "000"
+
 image:
   repository: linuxserver/sabnzbd
   tag: 4.2.2
   pullPolicy: IfNotPresent
-
-env:
-  TZ: Europe/London
-  HOST_WHITELIST: "*"
-  CONFIG_FILE: /config/sabnzbd.ini
-  PUID: 1000
-  PGID: 1000
-  UMASK: "000"
-  DOCKER_MODS: linuxserver/mods:universal-no-healthcheck
-
-securityContext:
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 1000
 
 service:
   main:
@@ -25,14 +20,57 @@ service:
         port: 8080
         nodePort: 30888
 
+ingress:
+  main:
+    enabled: false
+
 persistence:
   config:
     enabled: true
     type: hostPath
     hostPath: /mnt/local-volumes/sabnzbd/config
     mountPath: /config
+
   data:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd
     mountPath: /data
+
+  downloads:
+    enabled: false
+    mountPath: /downloads
+
+  media:
+    enabled: false
+    mountPath: /media
+
+securityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsUser: 1000
+
+probes:
+  liveness:
+    enabled: true
+    path: /
+    port: 8080
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    failureThreshold: 5
+
+  readiness:
+    enabled: true
+    path: /
+    port: 8080
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    failureThreshold: 5
+
+  startup:
+    enabled: true
+    path: /
+    port: 8080
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    failureThreshold: 30
