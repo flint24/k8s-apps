@@ -1,0 +1,34 @@
+image:
+  repository: linuxserver/tautulli
+  tag: latest
+
+env:
+  TZ: "Europe/Berlin"
+  PUID: "1000"
+  PGID: "100"
+
+service:
+  main:
+    enabled: true
+    type: NodePort
+    ports:
+      http:
+        port: 8181
+        nodePort: 31881
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 1Gi
+
+resources: {}
+nodeSelector:
+  kubernetes.io/hostname: node1
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 100
+  fsGroup: 100
