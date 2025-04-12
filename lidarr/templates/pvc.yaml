@@ -1,13 +1,11 @@
-{{- if .Values.persistence.config.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "lidarr.fullname" . }}-config
+  name: lidarr-config
 spec:
   accessModes:
-    - {{ .Values.persistence.config.accessMode }}
+    - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.persistence.config.size }}
-  storageClassName: {{ .Values.persistence.config.storageClass }}
-{{- end }}
+      storage: 1Gi
+  storageClassName: longhorn-2replicas
