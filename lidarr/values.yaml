@@ -25,6 +25,18 @@ persistence:
     accessMode: ReadWriteOnce
     storageClass: longhorn-2replicas
 
+  downloads:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/downloads/lidarr
+    mountPath: /downloads
+
+  music:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/music
+    mountPath: /music
+
 resources: {}
 
 podSecurityContext:
