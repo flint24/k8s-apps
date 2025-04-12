@@ -1,11 +1,12 @@
 image:
   repository: linuxserver/tautulli
   tag: latest
+  pullPolicy: IfNotPresent
 
 env:
-  TZ: "Europe/Berlin"
-  PUID: "1000"
-  PGID: "100"
+  PUID: 1000
+  PGID: 100
+  TZ: Europe/Berlin
 
 service:
   main:
@@ -14,15 +15,15 @@ service:
     ports:
       http:
         port: 8181
-        nodePort: 31881
+        nodePort: 30881  # You can change this if needed
 
 persistence:
   config:
     enabled: true
-    mountPath: /config
-    storageClass: ""
+    storageClass: longhorn-2replicas
     accessMode: ReadWriteOnce
     size: 1Gi
+    mountPath: /config
 
 resources: {}
 nodeSelector:
