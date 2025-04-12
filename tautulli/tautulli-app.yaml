@@ -1,0 +1,21 @@
+# tautulli-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tautulli
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/flint24/k8s-apps.git
+    targetRevision: HEAD
+    path: tautulli
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

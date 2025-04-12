@@ -1,0 +1,19 @@
+{{- if .Values.service.main.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tautulli.fullname" . }}
+  labels:
+    {{- include "tautulli.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.main.type | default "ClusterIP" }}
+  ports:
+    - name: http
+      port: {{ .Values.service.main.ports.http.port | default 8181 }}
+      targetPort: http
+      {{- if eq .Values.service.main.type "NodePort" }}
+      nodePort: {{ .Values.service.main.ports.http.nodePort | default 30881 }}
+      {{- end }}
+  selector:
+    {{- include "tautulli.selectorLabels" . | nindent 4 }}
+{{- end }}
