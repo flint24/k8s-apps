@@ -1,37 +1,36 @@
-tautulli:
-  image:
-    repository: linuxserver/tautulli
-    tag: latest
-    pullPolicy: IfNotPresent
+image:
+  repository: linuxserver/tautulli
+  tag: latest
+  pullPolicy: IfNotPresent
 
-  env:
-    PUID: 1000
-    PGID: 100
-    TZ: Europe/Berlin
+env:
+  PUID: 1000
+  PGID: 100
+  TZ: Europe/Berlin
 
-  service:
-    main:
-      enabled: true
-      type: NodePort
-      ports:
-        http:
-          port: 8181
-          nodePort: 30881
+service:
+  main:
+    enabled: true
+    type: NodePort
+    ports:
+      http:
+        port: 8181
+        nodePort: 30881
 
-  persistence:
-    config:
-      enabled: true
-      mountPath: /config
-      size: 1Gi
-      accessMode: ReadWriteOnce
-      storageClass: longhorn-2replicas
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+    size: 1Gi
+    accessMode: ReadWriteOnce
+    storageClass: longhorn-2replicas
 
-  resources: {}
+resources: {}
 
-  podSecurityContext:
-    runAsUser: 1000
-    runAsGroup: 100
-    fsGroup: 100
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 100
+  fsGroup: 100
 
-  nodeSelector:
-    kubernetes.io/hostname: node1
+nodeSelector:
+  kubernetes.io/hostname: node1
