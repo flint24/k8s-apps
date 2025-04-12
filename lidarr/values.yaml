@@ -34,7 +34,7 @@ persistence:
   music:
     enabled: true
     type: hostPath
-    hostPath: /mnt/Father/music
+    hostPath: /mnt/Father/Music
     mountPath: /music
 
 resources: {}
