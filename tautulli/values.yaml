@@ -9,27 +9,21 @@ env:
   TZ: Europe/Berlin
 
 service:
-  main:
-    enabled: true
-    type: NodePort
-    ports:
-      http:
-        port: 8181
-        nodePort: 30881  # You can change this if needed
+  type: NodePort
+  port: 8181
+  nodePort: 30881
 
 persistence:
-  config:
-    enabled: true
-    storageClass: longhorn-2replicas
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    mountPath: /config
+  enabled: true
+  storageClass: longhorn-2replicas
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /config
 
-resources: {}
 nodeSelector:
   kubernetes.io/hostname: node1
 
-podSecurityContext:
+securityContext:
   runAsUser: 1000
   runAsGroup: 100
   fsGroup: 100
