@@ -28,7 +28,8 @@ spec:
             - name: TZ
               value: "{{ .Values.env.TZ }}"
           ports:
-            - containerPort: 9696
+            - name: http
+              containerPort: 9696
           volumeMounts:
             - name: config
               mountPath: /config
