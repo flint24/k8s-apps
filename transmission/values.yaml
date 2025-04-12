@@ -1,48 +1,49 @@
+# File: values.yaml
 image:
   repository: linuxserver/transmission
   tag: latest
   pullPolicy: IfNotPresent
 
 env:
-  TRANSMISSION_INCOMPLETE_DIR: /incomplete
-  TRANSMISSION_INCOMPLETE_DIR_ENABLED: true
-  TRANSMISSION_WATCH_DIR: /watch
+  PUID: 1000
+  PGID: 100
+  TZ: Europe/Berlin
 
 service:
-  type: NodePort
-  port: 9091
-  nodePort: 30911
+  main:
+    enabled: true
+    type: NodePort
+    ports:
+      http:
+        port: 9091
+        nodePort: 30991
 
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /mnt/Father/downloads/transmission/config
     mountPath: /config
+    size: 1Gi
+    accessMode: ReadWriteOnce
+    storageClass: longhorn-2replicas
 
   downloads:
     enabled: true
     type: hostPath
-    hostPath: /mnt/Father/downloads/transmission
     mountPath: /downloads
+    hostPath: /mnt/Father/downloads/transmission
 
   watch:
     enabled: true
     type: hostPath
-    hostPath: /mnt/Father/downloads/transmission/watch
     mountPath: /watch
-
-  incomplete:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/Father/downloads/transmission/incomplete
-    mountPath: /incomplete
+    hostPath: /mnt/Father/downloads/transmission/watch
 
 resources: {}
 
-ports:
-  web:
-    enabled: true
-    port: 9091
-    protocol: TCP
-    targetPort: 9091
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 100
+  fsGroup: 100
+
+nodeSelector:
+  kubernetes.io/hostname: node1
