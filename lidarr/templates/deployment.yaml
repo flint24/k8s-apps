@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lidarr.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "lidarr.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "lidarr.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "lidarr.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: node1
+      securityContext:
+        fsGroup: 100
+      containers:
+        - name: lidarr
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: PUID
+              value: "{{ .Values.env.PUID }}"
+            - name: PGID
+              value: "{{ .Values.env.PGID }}"
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          ports:
+            - name: http
+              containerPort: 8686
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: {{ .Values.persistence.config.mountPath }}
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ include "lidarr.fullname" . }}-config
