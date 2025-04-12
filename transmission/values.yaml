@@ -1,6 +1,6 @@
 image:
   repository: linuxserver/transmission
-  tag: latest
+  tag: 3.00-r8-ls162
   pullPolicy: IfNotPresent
 
 env:
