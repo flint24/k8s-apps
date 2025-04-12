@@ -1,16 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lidarr
+  name: {{ include "lidarr.fullname" . }}
+  labels:
+    {{- include "lidarr.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: lidarr
+      {{- include "lidarr.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: lidarr
+        {{- include "lidarr.selectorLabels" . | nindent 8 }}
     spec:
       nodeSelector:
         kubernetes.io/hostname: node1
@@ -31,18 +33,18 @@ spec:
             - containerPort: 8686
           volumeMounts:
             - name: config
-              mountPath: /config
+              mountPath: {{ .Values.persistence.config.mountPath }}
             - name: downloads
-              mountPath: /downloads
+              mountPath: {{ .Values.persistence.downloads.mountPath }}
             - name: music
-              mountPath: /music
+              mountPath: {{ .Values.persistence.music.mountPath }}
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: lidarr-config
+            claimName: {{ include "lidarr.fullname" . }}-config
         - name: downloads
           hostPath:
-            path: /mnt/Father/downloads/lidarr
+            path: {{ .Values.persistence.downloads.hostPath }}
         - name: music
           hostPath:
-            path: /mnt/Father/music
+            path: {{ .Values.persistence.music.hostPath }}

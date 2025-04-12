@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lidarr.fullname" . }}
+  labels:
+    {{- include "lidarr.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.main.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.main.ports.http.port }}
+      targetPort: 8686
+      nodePort: {{ .Values.service.main.ports.http.nodePort }}
+  selector:
+    {{- include "lidarr.selectorLabels" . | nindent 4 }}
