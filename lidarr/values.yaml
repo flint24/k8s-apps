@@ -1,0 +1,36 @@
+image:
+  repository: linuxserver/lidarr
+  tag: latest
+  pullPolicy: IfNotPresent
+
+env:
+  PUID: 1000
+  PGID: 100
+  TZ: Europe/Berlin
+
+service:
+  main:
+    enabled: true
+    type: NodePort
+    ports:
+      http:
+        port: 8686
+        nodePort: 30886
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+    size: 1Gi
+    accessMode: ReadWriteOnce
+    storageClass: longhorn-2replicas
+
+resources: {}
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 100
+  fsGroup: 100
+
+nodeSelector:
+  kubernetes.io/hostname: node1
