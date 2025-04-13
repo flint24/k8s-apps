@@ -6,7 +6,21 @@
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{-  := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s"  | trunc 63 | trimSuffix "-" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- printf "%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+{{- end }}
+
+{{- define "bazarr.labels" -}}
+app.kubernetes.io/name: {{ include "bazarr.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: {{ .Chart.AppVersion }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/component: bazarr
+app.kubernetes.io/part-of: media-stack
+{{- end }}
+
+{{- define "bazarr.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "bazarr.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
