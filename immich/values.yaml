@@ -7,7 +7,11 @@ env:
   PUID: 1000
   PGID: 100
   TZ: Europe/Berlin
-  DB_URL: postgresql://postgres:5P8EFuAZuc@my-app-postgresql.default.svc.cluster.local:5432/postgres
+  DB_HOSTNAME: my-app-postgresql.default.svc.cluster.local
+  DB_PORT: 5432
+  DB_USERNAME: postgres
+  DB_PASSWORD: 5P8EFuAZuc
+  DB_DATABASE_NAME: postgres
   REDIS_HOSTNAME: argocd-redis.argocd.svc.cluster.local
   REDIS_PORT: 6379
   IMMICH_MACHINE_LEARNING_URL: http://127.0.0.1:3003
@@ -20,7 +24,7 @@ service:
     ports:
       http:
         port: 3001
-        nodePort: 30001
+        nodePort: 3001
 
 persistence:
   config:
