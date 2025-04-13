@@ -27,10 +27,19 @@ spec:
               value: "{{ .Values.env.PGID }}"
             - name: TZ
               value: "{{ .Values.env.TZ }}"
+            - name: DB_URL
+              value: "{{ .Values.env.DB_URL }}"
+            - name: REDIS_HOSTNAME
+              value: "{{ .Values.env.REDIS_HOSTNAME }}"
+            - name: REDIS_PORT
+              value: "{{ .Values.env.REDIS_PORT }}"
+            - name: IMMICH_MACHINE_LEARNING_URL
+              value: "{{ .Values.env.IMMICH_MACHINE_LEARNING_URL }}"
+            - name: IMMICH_ENABLE_MACHINE_LEARNING
+              value: "{{ .Values.env.IMMICH_ENABLE_MACHINE_LEARNING }}"
           ports:
-            - name: http
-              containerPort: 3001
-              protocol: TCP
+            - containerPort: 3001
+              name: http
           volumeMounts:
             - name: config
               mountPath: /config
