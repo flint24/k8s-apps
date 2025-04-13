@@ -1,6 +1,6 @@
 image:
-  repository: 
-  tag: 
+  repository: linuxserver/nextcloud
+  tag: latest
   pullPolicy: IfNotPresent
 
 env:
@@ -21,14 +21,14 @@ persistence:
   config:
     enabled: true
     mountPath: /config
-    size: 
+    size: 1Gi
     accessMode: ReadWriteOnce
-    storageClass: 
+    storageClass: longhorn-2replicas
 
   data:
     enabled: true
     type: hostPath
-    hostPath: /nextcloud
+    hostPath: /mnt/Father/downloads/nextcloud/nextcloud
     mountPath: /data
 
 resources: {}
