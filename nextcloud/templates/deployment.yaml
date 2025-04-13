@@ -28,8 +28,7 @@ spec:
             - name: TZ
               value: "{{ .Values.env.TZ }}"
           ports:
-            - name: http
-              containerPort: 80
+            - containerPort: 80
           volumeMounts:
             - name: config
               mountPath: /config
@@ -41,4 +40,4 @@ spec:
             claimName: nextcloud-config
         - name: data
           hostPath:
-            path: /mnt/Father/downloads/nextcloud/nextcloud
+            path: /nextcloud
