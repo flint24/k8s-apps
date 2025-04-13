@@ -1,3 +1,5 @@
+# immich/values.yaml
+
 image:
   repository: ghcr.io/immich-app/immich-server
   tag: v1.103.1
