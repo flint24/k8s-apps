@@ -40,4 +40,4 @@ spec:
             claimName: nextcloud-config
         - name: data
           hostPath:
-            path: /nextcloud
+            path: /mnt/Father/downloads/nextcloud/nextcloud
