@@ -15,8 +15,6 @@ spec:
       serviceAccountName: velero
       nodeSelector:
         kubernetes.io/hostname: node1
-      securityContext:
-        fsGroup: 100
       containers:
         - name: velero
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
