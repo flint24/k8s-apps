@@ -6,24 +6,29 @@ image:
 env:
   TZ: Europe/Berlin
 
-serviceAccount:
-  create: true
-  name: velero
+service:
+  main:
+    enabled: true
+    type: NodePort
+    ports:
+      http:
+        port: 80
+        nodePort: 30
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+    size: 1Gi
+    accessMode: ReadWriteOnce
+    storageClass: longhorn-2replicas
+
+resources: {}
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 100
+  fsGroup: 100
 
 nodeSelector:
   kubernetes.io/hostname: node1
-
-backupStorageLocation:
-  name: default
-  provider: aws
-  bucket: your-bucket-name
-  config:
-    region: us-east-1
-    s3ForcePathStyle: true
-    s3Url: http://your-s3-endpoint:9000
-    insecureSkipTLSVerify: true
-    publicUrl: http://your-s3-endpoint:9000
-    credential:
-      useSecret: true
-
-volumes: []
