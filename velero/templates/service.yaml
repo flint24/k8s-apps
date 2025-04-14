@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: velero
   labels:
-    {{- include "velero.labels" . | nindent 4 }}
+    app.kubernetes.io/name: velero
 spec:
+  type: {{ .Values.service.main.type }}
   selector:
     app.kubernetes.io/name: velero
   ports:
-    - port: 80
-      targetPort: 8085
-      protocol: TCP
+    - name: http
+      port: {{ .Values.service.main.ports.http.port }}
+      targetPort: {{ .Values.service.main.ports.http.port }}
+      nodePort: {{ .Values.service.main.ports.http.nodePort }}

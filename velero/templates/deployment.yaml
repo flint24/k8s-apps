@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: velero
-  labels:
-    {{- include "velero.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
@@ -14,17 +12,17 @@ spec:
       labels:
         app.kubernetes.io/name: velero
     spec:
-      serviceAccountName: {{ .Values.serviceAccount.name }}
+      serviceAccountName: velero
       nodeSelector:
-        {{- toYaml .Values.nodeSelector | nindent 8 }}
+        kubernetes.io/hostname: node1
+      securityContext:
+        fsGroup: 100
       containers:
         - name: velero
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command:
-            - /velero
           args:
             - server
           env:
             - name: TZ
-              value: {{ .Values.env.TZ }}
+              value: "{{ .Values.env.TZ }}"

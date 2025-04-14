@@ -4,15 +4,17 @@ metadata:
   name: velero
   namespace: argocd
 spec:
-  project: default
   destination:
-    server: https://kubernetes.default.svc
     namespace: velero
+    server: https://kubernetes.default.svc
+  project: default
   source:
+    path: velero
     repoURL: https://github.com/flint24/k8s-apps.git
     targetRevision: main
-    path: velero
+    helm:
+      skipCrds: true
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
+      prune: true
