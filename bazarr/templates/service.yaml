@@ -3,15 +3,13 @@ kind: Service
 metadata:
   name: {{ include "bazarr.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "bazarr.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "bazarr.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.main.type }}
-  selector:
-    app.kubernetes.io/name: {{ include "bazarr.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
   ports:
     - name: http
       port: {{ .Values.service.main.ports.http.port }}
       targetPort: 6767
       nodePort: {{ .Values.service.main.ports.http.nodePort }}
+  selector:
+    {{- include "bazarr.selectorLabels" . | nindent 4 }}
