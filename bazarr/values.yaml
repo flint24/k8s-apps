@@ -13,8 +13,9 @@ service:
     enabled: true
     type: NodePort
     ports:
-    - containerPort: 6767
-      hostPort: 6767
+      http:
+        port: 6767
+        nodePort: 30677
 
 persistence:
   config:
