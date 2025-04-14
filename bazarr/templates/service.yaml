@@ -10,6 +10,6 @@ spec:
     {{- include "bazarr.selectorLabels" . | nindent 4 }}
   ports:
     - name: http
-      port: {{ .Values.service.main.ports.http.port }}
-      targetPort: {{ .Values.service.main.ports.http.port }}
-      nodePort: {{ .Values.service.main.ports.http.nodePort }}
+      port: {{ .Values.service.main.ports.http.port | int }}
+      targetPort: {{ .Values.service.main.ports.http.port | int }}
+      nodePort: {{ .Values.service.main.ports.http.nodePort | int }}
