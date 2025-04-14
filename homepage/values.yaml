@@ -1,4 +1,0 @@
-image:
-  repository: linuxserver/homepage:latest
-  pullPolicy: IfNotPresent
-  tag: ""
