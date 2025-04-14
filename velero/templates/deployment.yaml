@@ -21,7 +21,8 @@ spec:
         - name: velero
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args:
+          command:
+            - /velero
             - server
           env:
             - name: TZ
