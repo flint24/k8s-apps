@@ -43,21 +43,21 @@ spec:
               containerPort: 8085
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8085
-            initialDelaySeconds: 20
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 6
+ #           httpGet:
+ #             path: /healthz
+ #             port: 8085
+ #           initialDelaySeconds: 20
+ #           periodSeconds: 10
+ #           timeoutSeconds: 5
+ #           failureThreshold: 6
           readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 8085
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 6
+#            httpGet:
+#              path: /healthz
+#              port: 8085
+#            initialDelaySeconds: 10
+#            periodSeconds: 10
+#            timeoutSeconds: 5
+#            failureThreshold: 6
         - name: plugins
           emptyDir: {}
         - name: scratch
