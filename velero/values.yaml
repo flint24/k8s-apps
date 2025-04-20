@@ -1,34 +1,28 @@
-image:
-  repository: velero/velero
-  tag: v1.13.2
-  pullPolicy: IfNotPresent
+deployBackupStorageLocation: false
+deployVolumeSnapshotLocation: false
 
-env:
-  TZ: Europe/Berlin
+configuration:
+  backupStorageLocations: []
+  volumeSnapshotLocations: []
 
-service:
-  main:
-    enabled: true
-    type: NodePort
-    ports:
-      http:
-        port: 80
-        nodePort: 30
+velero:
+  credentials:
+    useSecret: false
+  deployNodeAgent: true
+  snapshotsEnabled: false
 
-persistence:
-  config:
-    enabled: true
-    mountPath: /config
-    size: 1Gi
-    accessMode: ReadWriteOnce
-    storageClass: longhorn-2replicas
+  initContainers:
+    - name: velero-plugin-for-file-system
+      image: velero/velero-plugin-for-file-system:v0.1.2
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
 
-resources: {}
+  extraVolumes:
+    - name: velero-backup
+      persistentVolumeClaim:
+        claimName: velero-backup-pvc
 
-podSecurityContext:
-  runAsUser: 1000
-  runAsGroup: 100
-  fsGroup: 100
-
-nodeSelector:
-  kubernetes.io/hostname: node1
+  extraVolumeMounts:
+    - name: velero-backup
+      mountPath: /mnt/velero
