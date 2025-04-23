@@ -12,17 +12,15 @@ spec:
       labels:
         app.kubernetes.io/name: bazarr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
       containers:
         - name: bazarr
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "linuxserver/bazarr:latest"
           ports:
             - containerPort: 6767
               name: http
           env:
             - name: TZ
-              value: "{{ .Values.env.TZ }}"
+              value: "UTC"
           volumeMounts:
             - name: config
               mountPath: /config

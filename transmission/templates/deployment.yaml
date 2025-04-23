@@ -12,17 +12,15 @@ spec:
       labels:
         app.kubernetes.io/name: transmission
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
       containers:
         - name: transmission
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "linuxserver/transmission:4.0.5"
           ports:
             - containerPort: 9091
               name: http
           env:
             - name: TZ
-              value: "{{ .Values.env.TZ }}"
+              value: "UTC"
           volumeMounts:
             - name: config
               mountPath: /config
