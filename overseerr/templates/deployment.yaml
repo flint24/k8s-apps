@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overseerr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: overseerr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: overseerr
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: node1
+      containers:
+        - name: overseerr
+          image: "linuxserver/overseerr:latest"
+          ports:
+            - containerPort: 5055
+              name: http
+          env:
+            - name: TZ
+              value: "UTC"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: overseerr-config
