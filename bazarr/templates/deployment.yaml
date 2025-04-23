@@ -26,12 +26,27 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: downloads
-              mountPath: /downloads
+            - name: movies1
+              mountPath: /movies/father
+            - name: movies2
+              mountPath: /movies/mother
+            - name: tv1
+              mountPath: /tv/father
+            - name: tv2
+              mountPath: /tv/mother
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: bazarr-config
-        - name: downloads
+        - name: movies1
           hostPath:
-            path: /mnt/Father/downloads/bazarr
+            path: /mnt/Father/Movies
+        - name: movies2
+          hostPath:
+            path: /mnt/Mother/Movies
+        - name: tv1
+          hostPath:
+            path: /mnt/Father/TV
+        - name: tv2
+          hostPath:
+            path: /mnt/Mother/TV
