@@ -1,75 +1,26 @@
-
-env:
-  CONFIG_FILE: /config/sabnzbd.ini
-  HOST_WHITELIST: "*"
-  PGID: 1000
-  PUID: 1000
-  TZ: Europe/Berlin
-  UMASK: "000"
-
 image:
   repository: linuxserver/sabnzbd
-  tag: latest
+  tag: 4.2.2
   pullPolicy: IfNotPresent
 
 service:
-  main:
-    enabled: false
+  type: NodePort
+  port: 8080
+  nodePort: 30888
 
-ingress:
-  main:
-    enabled: false
+timezone: Europe/Berlin
+puid: 1000
+pgid: 1000
+umask: "000"
 
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /mnt/Father/downloads/sabnzbd/config
-    mountPath: /config
+    size: 5Gi
+    storageClass: longhorn-2replicas
 
   data:
-    enabled: true
-    type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd
-    mountPath: /data
 
   downloads:
-    enabled: true
-    type: hostPath
     hostPath: /mnt/Father/downloads/sabnzbd
-    mountPath: /downloads
-
-  media:
-    enabled: false
-    mountPath: /media
-
-securityContext:
-  fsGroup: 1000
-  runAsGroup: 1000
-  runAsUser: 1000
-
-probes:
-  liveness:
-    enabled: true
-    path: /
-    port: 8080
-    initialDelaySeconds: 20
-    periodSeconds: 10
-    failureThreshold: 5
-
-  readiness:
-    enabled: true
-    path: /
-    port: 8080
-    initialDelaySeconds: 20
-    periodSeconds: 10
-    failureThreshold: 5
-
-  startup:
-    enabled: true
-    path: /
-    port: 8080
-    initialDelaySeconds: 30
-    periodSeconds: 5
-    failureThreshold: 20
-

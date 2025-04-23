@@ -6,12 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://k8s-at-home.com/charts/
-    chart: sabnzbd
-    targetRevision: 9.4.2
-    helm:
-      valueFiles:
-        - values.yaml
+    repoURL: https://github.com/flint24/k8s-apps.git
+    targetRevision: main
+    path: sabnzbd
   destination:
     server: https://kubernetes.default.svc
     namespace: media
