@@ -1,0 +1,19 @@
+image:
+  repository: linuxserver/prowlarr
+  tag: version-1.25.4.4818
+
+service:
+  main:
+    type: NodePort
+    ports:
+      http: 9696
+    nodePort: 30894
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    existingClaim: prowlarr-config
+
+env:
+  TZ: UTC
