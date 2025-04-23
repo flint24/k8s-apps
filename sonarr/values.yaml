@@ -1,0 +1,24 @@
+image:
+  repository: linuxserver/sonarr
+  tag: version-4.0.14.2939
+
+service:
+  main:
+    type: NodePort
+    ports:
+      http: 8989
+    nodePort: 30889
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    existingClaim: sonarr-config
+  downloads:
+    enabled: true
+    type: hostPath
+    mountPath: /downloads
+    hostPath: /mnt/Father/downloads/sonarr
+
+env:
+  TZ: UTC
