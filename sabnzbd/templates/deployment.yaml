@@ -20,6 +20,8 @@ spec:
               name: http
           env:
             - name: TZ
+        - name: SABNZBD_HOST_WHITELIST_ENTRIES
+          value: "*"
               value: Europe/Berlin
             - name: PUID
               value: "1000"
