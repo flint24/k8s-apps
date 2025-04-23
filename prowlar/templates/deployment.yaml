@@ -12,8 +12,6 @@ spec:
       labels:
         app.kubernetes.io/name: prowlarr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
       containers:
         - name: prowlarr
           image: "linuxserver/prowlarr:version-1.25.4.4818"
