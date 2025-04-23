@@ -73,5 +73,3 @@ probes:
     periodSeconds: 5
     failureThreshold: 20
 
-nodeSelector:
-  kubernetes.io/hostname: node1

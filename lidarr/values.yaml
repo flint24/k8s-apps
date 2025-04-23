@@ -44,5 +44,3 @@ podSecurityContext:
   runAsGroup: 100
   fsGroup: 100
 
-nodeSelector:
-  kubernetes.io/hostname: node1
