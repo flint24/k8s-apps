@@ -1,0 +1,24 @@
+image:
+  repository: linuxserver/bazarr
+  tag: latest
+
+service:
+  main:
+    type: NodePort
+    ports:
+      http: 6767
+    nodePort: 30892
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    existingClaim: bazarr-config
+  downloads:
+    enabled: true
+    type: hostPath
+    mountPath: /downloads
+    hostPath: /mnt/Father/downloads/bazarr
+
+env:
+  TZ: UTC
