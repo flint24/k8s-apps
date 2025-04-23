@@ -15,13 +15,14 @@ spec:
       containers:
         - name: sabnzbd
           image: "linuxserver/sabnzbd:4.2.2"
+          env:
+            - name: TZ
+              value: Europe/Berlin
+            - name: SABNZBD_HOST_WHITELIST_ENTRIES
+              value: "*"
           ports:
             - containerPort: 8080
               name: http
-          env:
-            - name: TZ
-          - name: SABNZBD_HOST_WHITELIST_ENTRIES
-            value: "*"
               value: "*"
           value: "*"
           value: "*"
