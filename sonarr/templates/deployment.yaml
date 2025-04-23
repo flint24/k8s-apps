@@ -12,22 +12,20 @@ spec:
       labels:
         app.kubernetes.io/name: sonarr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
       containers:
         - name: sonarr
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "linuxserver/sonarr:version-4.0.14.2939"
           ports:
             - containerPort: 8989
               name: http
+          env:
+            - name: TZ
+              value: "UTC"
           volumeMounts:
             - name: config
               mountPath: /config
             - name: downloads
               mountPath: /downloads
-          env:
-            - name: TZ
-              value: "{{ .Values.env.TZ }}"
       volumes:
         - name: config
           persistentVolumeClaim:
