@@ -1,51 +1,29 @@
 image:
   repository: linuxserver/transmission
-  tag: 3.00-r8-ls162
-  pullPolicy: IfNotPresent
-
-env:
-  PUID: 1000
-  PGID: 100
-  TZ: Europe/Berlin
+  tag: 4.0.5
 
 service:
   main:
-    enabled: true
     type: NodePort
     ports:
-      http:
-        port: 9091
-        nodePort: 30991
+      http: 9091
+    nodePort: 30891
 
 persistence:
   config:
     enabled: true
-    mountPath: /config
-    size: 1Gi
-    accessMode: ReadWriteOnce
-    storageClass: longhorn-2replicas
-
+    type: pvc
+    existingClaim: transmission-config
   downloads:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/transmission
     mountPath: /downloads
-
   watch:
     enabled: true
     type: hostPath
     hostPath: /mnt/Father/downloads/transmission/watch
     mountPath: /watch
 
-  web:
-    enabled: false  # Critical: Disable this to avoid 404 on UI
-
-resources: {}
-
-podSecurityContext:
-  runAsUser: 1000
-  runAsGroup: 100
-  fsGroup: 100
-
-nodeSelector:
-  kubernetes.io/hostname: node1
+env:
+  TZ: UTC
