@@ -1,50 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "lidarr.fullname" . }}
-  labels:
-    {{- include "lidarr.labels" . | nindent 4 }}
+  name: lidarr
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "lidarr.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: lidarr
   template:
     metadata:
       labels:
-        {{- include "lidarr.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: lidarr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
-      securityContext:
-        fsGroup: 100
       containers:
         - name: lidarr
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: PUID
-              value: "{{ .Values.env.PUID }}"
-            - name: PGID
-              value: "{{ .Values.env.PGID }}"
-            - name: TZ
-              value: "{{ .Values.env.TZ }}"
+          image: "linuxserver/lidarr:latest"
           ports:
             - containerPort: 8686
+              name: http
+          env:
+            - name: TZ
+              value: "Europe/Berlin"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "100"
           volumeMounts:
             - name: config
-              mountPath: {{ .Values.persistence.config.mountPath }}
+              mountPath: /config
             - name: downloads
-              mountPath: {{ .Values.persistence.downloads.mountPath }}
+              mountPath: /downloads
             - name: music
-              mountPath: {{ .Values.persistence.music.mountPath }}
+              mountPath: /music
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: {{ include "lidarr.fullname" . }}-config
+            claimName: lidarr-config
         - name: downloads
           hostPath:
-            path: {{ .Values.persistence.downloads.hostPath }}
+            path: /mnt/Father/downloads/lidarr
         - name: music
           hostPath:
-            path: {{ .Values.persistence.music.hostPath }}
+            path: /mnt/Father/Music
