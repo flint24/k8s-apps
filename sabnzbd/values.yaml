@@ -2,25 +2,23 @@ image:
   repository: linuxserver/sabnzbd
   tag: 4.2.2
   pullPolicy: IfNotPresent
-
 service:
   type: NodePort
   port: 8080
   nodePort: 30888
-
 timezone: Europe/Berlin
 puid: 1000
 pgid: 1000
 umask: "000"
-
 persistence:
   config:
     enabled: true
     size: 5Gi
     storageClass: longhorn-2replicas
-
   data:
     hostPath: /mnt/Father/downloads/sabnzbd
-
   downloads:
     hostPath: /mnt/Father/downloads/sabnzbd
+env:
+  - name: HOST_WHITELIST
+    value: '*'
