@@ -14,11 +14,26 @@ persistence:
     enabled: true
     type: pvc
     existingClaim: bazarr-config
-  downloads:
+  movies:
     enabled: true
     type: hostPath
-    mountPath: /downloads
-    hostPath: /mnt/Father/downloads/bazarr
+    hostPath: /mnt/Father/Movies
+    mountPath: /movies/father
+  movies2:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Mother/Movies
+    mountPath: /movies/mother
+  tv:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Father/TV
+    mountPath: /tv/father
+  tv2:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/Mother/TV
+    mountPath: /tv/mother
 
 env:
   TZ: UTC
