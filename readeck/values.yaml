@@ -1,5 +1,5 @@
 image:
-  repository: linuxserver/readeck
+  repository: ghcr.io/linuxserver/readeck
   tag: latest
   pullPolicy: IfNotPresent
 

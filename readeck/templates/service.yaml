@@ -8,6 +8,6 @@ spec:
   selector:
     app.kubernetes.io/name: readeck
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
-      nodePort: {{ .Values.service.nodePort | int }}
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30893  # <-- Pick a NodePort that is NOT used yet
