@@ -13,12 +13,17 @@ spec:
       labels:
         app.kubernetes.io/name: prowlarr
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: node1
       containers:
         - name: prowlarr
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - containerPort: 9696
+          env:
+            - name: TZ
+              value: "{{ .Values.timezone | default \"UTC\" }}"
           volumeMounts:
             - name: config
               mountPath: /config
@@ -33,6 +38,8 @@ spec:
         - name: downloads
           hostPath:
             path: /mnt/Father/downloads/prowlarr
+            type: DirectoryOrCreate
         - name: watch
           hostPath:
             path: /mnt/Father/downloads/prowlarr/watch
+            type: DirectoryOrCreate
