@@ -19,9 +19,6 @@ spec:
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - containerPort: 9696
-          env:
-            - name: TZ
-              value: "{{ .Values.env.TZ }}"
           volumeMounts:
             - name: config
               mountPath: /config
@@ -35,9 +32,9 @@ spec:
             claimName: prowlarr-config
         - name: downloads
           hostPath:
-            path: "{{ .Values.persistence.downloads.hostPath }}"
+            path: /mnt/Father/downloads/prowlarr
             type: DirectoryOrCreate
         - name: watch
           hostPath:
-            path: "{{ .Values.persistence.watch.hostPath }}"
+            path: /mnt/Father/downloads/prowlarr/watch
             type: DirectoryOrCreate

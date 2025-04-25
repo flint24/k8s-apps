@@ -1,17 +1,18 @@
 image:
-  repository: linuxserver/prowlarr
-  tag: version-1.25.4.4818
+  repository: ghcr.io/linuxserver/prowlarr
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
   type: NodePort
   port: 9696
-  nodePort: 30894
+  nodePort: 30996
 
 persistence:
   config:
     enabled: true
-    existingClaim: prowlarr-config
+    storageClass: longhorn-2replicas
+    size: 5Gi
   downloads:
     enabled: true
     type: hostPath
@@ -21,5 +22,4 @@ persistence:
     type: hostPath
     hostPath: /mnt/Father/downloads/prowlarr/watch
 
-env:
-  TZ: UTC
+resources: {}
