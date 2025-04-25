@@ -1,20 +1,19 @@
 image:
-  repository: ghcr.io/linuxserver/readeck
+  repository: linuxserver/readeck
   tag: latest
   pullPolicy: IfNotPresent
 
 service:
   type: NodePort
-  port: 8787
-  nodePort: 30887
+  port: 8080
+  nodePort: 30987  # <-- new NodePort (free)
 
 persistence:
-  readeck:
+  config:
     enabled: true
     storageClass: longhorn-2replicas
     size: 5Gi
   downloads:
-    enabled: true
     path: /mnt/Father/downloads/readeck
 
 resources: {}
