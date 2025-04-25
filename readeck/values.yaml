@@ -1,21 +1,8 @@
 image:
   repository: ghcr.io/linuxserver/readeck
-  tag: 1.0.7
-  pullPolicy: IfNotPresent
+  tag: latest
+  pullPolicy: Always
 
 service:
-  type: NodePort
   port: 8080
   nodePort: 30897
-
-persistence:
-  config:
-    enabled: true
-    storageClass: longhorn-2replicas
-    size: 5Gi
-  downloads:
-    path: /mnt/Father/downloads/readeck
-  watch:
-    path: /mnt/Father/downloads/readeck/watch
-
-resources: {}
