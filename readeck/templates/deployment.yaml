@@ -5,6 +5,8 @@ metadata:
   namespace: media
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: readeck
@@ -32,7 +34,7 @@ spec:
             claimName: readeck-config
         - name: downloads
           hostPath:
-            path: /mnt/Father/downloads/readeck
+            path: {{ .Values.persistence.downloads.path }}
         - name: watch
           hostPath:
-            path: /mnt/Father/downloads/readeck/watch
+            path: {{ .Values.persistence.watch.path }}
