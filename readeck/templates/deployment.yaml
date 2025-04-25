@@ -22,19 +22,9 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
-            - name: config
-              mountPath: /config
-            - name: downloads
-              mountPath: /downloads
-            - name: watch
-              mountPath: /watch
+            - name: readeck
+              mountPath: /readeck
       volumes:
-        - name: config
+        - name: readeck
           persistentVolumeClaim:
             claimName: readeck-config
-        - name: downloads
-          hostPath:
-            path: {{ .Values.persistence.downloads.path }}
-        - name: watch
-          hostPath:
-            path: {{ .Values.persistence.watch.path }}
