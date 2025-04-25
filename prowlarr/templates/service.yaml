@@ -4,10 +4,10 @@ metadata:
   name: prowlarr
   namespace: media
 spec:
-  type: NodePort
+  type: {{ .Values.service.type }}
   selector:
     app.kubernetes.io/name: prowlarr
   ports:
-    - port: 9696
+    - port: {{ .Values.service.port }}
       targetPort: 9696
-      nodePort: 30996
+      nodePort: {{ .Values.service.nodePort }}

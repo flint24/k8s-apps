@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/flint24/k8s-apps.git
     targetRevision: main
-    path: prowlarr   # <- corrected here
+    path: prowlarr
   destination:
     server: https://kubernetes.default.svc
     namespace: media
@@ -16,3 +16,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
