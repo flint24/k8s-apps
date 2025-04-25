@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/flint24/k8s-apps.git
     targetRevision: main
-    path: prowlarr
+    path: prowlarr   # <- corrected here
   destination:
     server: https://kubernetes.default.svc
     namespace: media
