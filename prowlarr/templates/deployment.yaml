@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prowlarr
+  namespace: media
 spec:
   replicas: 1
   selector:
@@ -12,28 +13,26 @@ spec:
       labels:
         app.kubernetes.io/name: prowlarr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
-      securityContext:
-        fsGroup: 100
       containers:
         - name: prowlarr
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: PUID
-              value: "{{ .Values.env.PUID }}"
-            - name: PGID
-              value: "{{ .Values.env.PGID }}"
-            - name: TZ
-              value: "{{ .Values.env.TZ }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
-            - name: http
-              containerPort: 9696
+            - containerPort: 9696
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+            - name: watch
+              mountPath: /watch
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: prowlarr-config
+        - name: downloads
+          hostPath:
+            path: /mnt/Father/downloads/prowlarr
+        - name: watch
+          hostPath:
+            path: /mnt/Father/downloads/prowlarr/watch

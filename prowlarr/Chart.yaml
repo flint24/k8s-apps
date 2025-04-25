@@ -1,6 +1,5 @@
 apiVersion: v2
 name: prowlarr
-description: A Helm chart for Prowlarr
-version: 0.1.0
-appVersion: "latest"
+description: Prowlarr Deployment
 type: application
+version: 1.0.0

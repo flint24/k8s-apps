@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "prowlarr.fullname" . }}
-  labels:
-    {{- include "prowlarr.labels" . | nindent 4 }}
+  name: prowlarr
+  namespace: media
 spec:
-  type: {{ .Values.service.main.type }}
+  type: NodePort
   selector:
-    {{- include "prowlarr.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: prowlarr
   ports:
-    - name: http
-      port: {{ .Values.service.main.ports.http.port }}
-      targetPort: http
-      nodePort: {{ .Values.service.main.ports.http.nodePort }}
+    - port: 9696
+      targetPort: 9696
+      nodePort: 30996
