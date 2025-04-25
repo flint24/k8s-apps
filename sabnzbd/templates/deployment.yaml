@@ -2,8 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sabnzbd
-  labels:
-    app.kubernetes.io/name: sabnzbd
+  namespace: media
 spec:
   replicas: 1
   selector:
@@ -16,14 +15,15 @@ spec:
     spec:
       containers:
         - name: sabnzbd
-          image: linuxserver/sabnzbd:4.2.2
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - containerPort: 8080
           env:
+            - name: SABNZBD__HOST_WHITELIST_ENTRIES
+              value: "{{ .Values.env.SABNZBD__HOST_WHITELIST_ENTRIES }}"
             - name: TZ
-              value: Europe/Berlin
-            - name: SABNZBD_HOST_WHITELIST_ENTRIES
-              value: "*"
+              value: "{{ .Values.env.TZ }}"
           volumeMounts:
             - name: config
               mountPath: /config
@@ -35,4 +35,4 @@ spec:
             claimName: sabnzbd-config
         - name: data
           hostPath:
-            path: /mnt/Father/downloads/sabnzbd
+            path: "{{ .Values.persistence.data.path }}"

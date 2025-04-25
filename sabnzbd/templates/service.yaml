@@ -2,13 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sabnzbd
+  namespace: media
 spec:
-  type: NodePort
+  type: {{ .Values.service.type }}
   ports:
-    - port: 8080
+    - port: {{ .Values.service.port }}
       targetPort: 8080
-      nodePort: 30888
-      protocol: TCP
-      name: http
+      nodePort: {{ .Values.service.nodePort | int }}
   selector:
     app.kubernetes.io/name: sabnzbd
