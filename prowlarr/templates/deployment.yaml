@@ -19,28 +19,25 @@ spec:
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - containerPort: 9696
+          env:
+            - name: TZ
+              value: UTC
           volumeMounts:
             - name: config
               mountPath: /config
-{{- if .Values.persistence.downloads.enabled }}
             - name: downloads
               mountPath: /downloads
-{{- end }}
-{{- if .Values.persistence.watch.enabled }}
             - name: watch
               mountPath: /watch
-{{- end }}
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: prowlarr-config
-{{- if .Values.persistence.downloads.enabled }}
         - name: downloads
           hostPath:
-            path: {{ .Values.persistence.downloads.hostPath }}
-{{- end }}
-{{- if .Values.persistence.watch.enabled }}
+            path: "{{ .Values.persistence.downloads.path }}"
+            type: DirectoryOrCreate
         - name: watch
           hostPath:
-            path: {{ .Values.persistence.watch.hostPath }}
-{{- end }}
+            path: "{{ .Values.persistence.watch.path }}"
+            type: DirectoryOrCreate
