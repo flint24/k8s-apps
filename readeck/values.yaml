@@ -1,12 +1,12 @@
 image:
   repository: ghcr.io/linuxserver/readeck
-  tag: latest
+  tag: 1.0.7
   pullPolicy: IfNotPresent
 
 service:
   type: NodePort
   port: 8080
-  nodePort: 30988  # Change this to an available port
+  nodePort: 30897
 
 persistence:
   config:
