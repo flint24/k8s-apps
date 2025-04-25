@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readeck
+  namespace: media
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: readeck
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: readeck
+    spec:
+      containers:
+        - name: readeck
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          ports:
+            - containerPort: 8787
+          env:
+            - name: TZ
+              value: UTC
+          volumeMounts:
+            - name: readeck
+              mountPath: /readeck
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: readeck
+          persistentVolumeClaim:
+            claimName: readeck-config
+        - name: downloads
+          hostPath:
+            path: {{ .Values.persistence.downloads.path }}
+            type: Directory
