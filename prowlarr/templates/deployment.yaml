@@ -22,19 +22,25 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+{{- if .Values.persistence.downloads.enabled }}
             - name: downloads
               mountPath: /downloads
+{{- end }}
+{{- if .Values.persistence.watch.enabled }}
             - name: watch
               mountPath: /watch
+{{- end }}
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: prowlarr-config
+{{- if .Values.persistence.downloads.enabled }}
         - name: downloads
           hostPath:
-            path: /mnt/Father/downloads/prowlarr
-            type: DirectoryOrCreate
+            path: {{ .Values.persistence.downloads.hostPath }}
+{{- end }}
+{{- if .Values.persistence.watch.enabled }}
         - name: watch
           hostPath:
-            path: /mnt/Father/downloads/prowlarr/watch
-            type: DirectoryOrCreate
+            path: {{ .Values.persistence.watch.hostPath }}
+{{- end }}
