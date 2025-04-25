@@ -1,8 +1,0 @@
-image:
-  repository: ghcr.io/linuxserver/readeck
-  tag: latest
-  pullPolicy: Always
-
-service:
-  port: 8080
-  nodePort: 30897

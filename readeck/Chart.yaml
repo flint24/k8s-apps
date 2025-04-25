@@ -1,5 +1,0 @@
-apiVersion: v2
-name: readeck
-description: Readeck Deployment
-type: application
-version: 1.0.0

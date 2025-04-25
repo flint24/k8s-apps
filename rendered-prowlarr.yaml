@@ -1,0 +1,76 @@
+---
+# Source: prowlarr/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prowlarr-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn-2replicas
+---
+# Source: prowlarr/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+  labels:
+    app.kubernetes.io/name: prowlarr
+    app.kubernetes.io/instance: prowlarr
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: prowlarr
+    app.kubernetes.io/part-of: media-stack
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: prowlarr
+    app.kubernetes.io/instance: prowlarr
+  ports:
+    - name: http
+      port: 9696
+      targetPort: http
+      nodePort: 30996
+---
+# Source: prowlarr/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prowlarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prowlarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prowlarr
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: node1
+      securityContext:
+        fsGroup: 100
+      containers:
+        - name: prowlarr
+          image: "linuxserver/prowlarr:version-1.25.4.4818"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "100"
+            - name: TZ
+              value: "Europe/Berlin"
+          ports:
+            - containerPort: 9696
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: prowlarr-config

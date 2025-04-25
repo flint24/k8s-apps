@@ -1,0 +1,17 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: default
+  namespace: velero
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: velero
+    meta.helm.sh/release-namespace: velero
+spec:
+  provider: velero.io/noop
+  accessMode: ReadWrite
+  objectStorage:
+    bucket: velero-local-bucket
+  config:
+    path: /mnt/velero

@@ -1,0 +1,13 @@
+# ~/k8s-apps/velero-backup-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: velero-backup-pvc
+  namespace: velero
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: longhorn-2replicas

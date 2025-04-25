@@ -1,0 +1,32 @@
+# longhorn-pvc-test.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: longhorn-2replicas
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  namespace: media
+spec:
+  containers:
+    - name: test-container
+      image: busybox
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 3600"]
+      volumeMounts:
+        - mountPath: "/data"
+          name: test-storage
+  volumes:
+    - name: test-storage
+      persistentVolumeClaim:
+        claimName: test-pvc

@@ -1,0 +1,13 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: default
+  namespace: velero
+spec:
+  provider: velero.io/local
+  accessMode: ReadWrite
+  objectStorage:
+    bucket: velero-local-bucket
+  config:
+    path: /mnt/velero
+    backupSyncPeriod: 1m

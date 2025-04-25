@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Prompt for app name
+read -p "🔍 Enter app name to search Helm repos: " APP_NAME
+
+# Search Helm repositories
+echo "Searching Helm charts for '$APP_NAME'..."
+CHARTS=$(helm search repo "$APP_NAME" -o json | jq -r '.[].name')
+
+if [[ -z "$CHARTS" ]]; then
+  echo "❌ No charts found for '$APP_NAME'"
+  exit 1
+fi
+
+# Present chart options to user
+echo "Found the following charts:"
+select SELECTED_CHART in $CHARTS; do
+  if [[ -n "$SELECTED_CHART" ]]; then
+    echo "✅ Selected chart: $SELECTED_CHART"
+    break
+  fi
+done
+
+# Create temp dir to fetch chart
+TMP_DIR=$(mktemp -d)
+cd "$TMP_DIR"
+
+# Pull chart and get default values
+helm pull "$SELECTED_CHART" --untar
+CHART_DIR=$(find . -maxdepth 1 -type d ! -name '.' | head -n1)
+cd "$CHART_DIR"
+helm show values "$SELECTED_CHART" > default-values.yaml
+
+# Render with values
+echo "🔍 Rendering chart with default values and detecting volume mount paths..."
+RENDERED=$(helm template demo . --values default-values.yaml 2>/dev/null)
+MOUNTS=$(echo "$RENDERED" | grep 'mountPath:' || true)
+
+if [[ -z "$MOUNTS" ]]; then
+  echo "⚠️ No mountPath definitions found in rendered chart"
+else
+  echo "$MOUNTS" | awk -F 'mountPath:' '{print $2}' | sed 's/"//g' | sed 's/^[[:space:]]*//' | sort | uniq
+fi
+
+# Clean up
+cd ~
+rm -rf "$TMP_DIR"
+echo "✅ Done"

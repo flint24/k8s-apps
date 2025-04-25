@@ -1,0 +1,21 @@
+---
+# Source: transmission/templates/pvc.yaml
+# File: templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: transmission-config
+  labels:
+    app.kubernetes.io/name: transmission
+    app.kubernetes.io/instance: transmission
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: transmission
+    app.kubernetes.io/part-of: media-stack
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn-2replicas

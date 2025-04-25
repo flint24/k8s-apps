@@ -1,0 +1,28 @@
+deployBackupStorageLocation: false
+deployVolumeSnapshotLocation: false
+
+configuration:
+  backupStorageLocations: []
+  volumeSnapshotLocations: []
+
+velero:
+  credentials:
+    useSecret: false
+  deployNodeAgent: true
+  snapshotsEnabled: false
+
+  initContainers:
+    - name: velero-plugin-for-file-system
+      image: velero/velero-plugin-for-file-system:v0.1.2
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+
+  extraVolumes:
+    - name: velero-backup
+      persistentVolumeClaim:
+        claimName: velero-backup-pvc
+
+  extraVolumeMounts:
+    - name: velero-backup
+      mountPath: /mnt/velero

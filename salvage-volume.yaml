@@ -1,0 +1,8 @@
+apiVersion: longhorn.io/v1beta2
+kind: Volume
+metadata:
+  name: salvage-0812f93b
+spec:
+  numberOfReplicas: 2
+  size: "60001615872"
+  fromReplicaDirectory: "/mnt/nvme0n1p1/replicas/pvc-0812f93b-fe35-48c2-9d03-77bfba28dda4-feab1e85"

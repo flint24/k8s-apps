@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero
+  namespace: velero
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: velero
+  template:
+    metadata:
+      labels:
+        component: velero
+    spec:
+      serviceAccountName: velero
+      initContainers:
+        - name: velero-plugin-for-aws
+          image: velero/velero-plugin-for-aws:v1.8.1
+          volumeMounts:
+            - mountPath: /target
+              name: plugins
+      containers:
+        - name: velero
+          image: velero/velero:v1.16.0
+          command:
+            - /velero
+          args:
+            - server
+          volumeMounts:
+            - mountPath: /plugins
+              name: plugins
+            - mountPath: /scratch
+              name: scratch
+            - mountPath: /cloud
+              name: cloud-credentials
+              readOnly: true
+          env:
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: /cloud/credentials-velero
+          ports:
+            - name: metrics
+              containerPort: 8085
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8085
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8085
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+      volumes:
+        - name: plugins
+          emptyDir: {}
+        - name: scratch
+          emptyDir: {}
+        - name: cloud-credentials
+          secret:
+            secretName: cloud-credentials

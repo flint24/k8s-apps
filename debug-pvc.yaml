@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: velero-debug
+  namespace: velero
+spec:
+  containers:
+    - name: debug
+      image: busybox
+      command: ["sh", "-c", "sleep 3600"]
+      volumeMounts:
+        - mountPath: /mnt/velero
+          name: velero-backup
+  volumes:
+    - name: velero-backup
+      persistentVolumeClaim:
+        claimName: velero-backup-pvc
+  restartPolicy: Never
