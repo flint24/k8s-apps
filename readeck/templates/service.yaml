@@ -10,4 +10,4 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-      nodePort: 30893  # <-- Pick a NodePort that is NOT used yet
+      nodePort: 30897  # <-- Pick a NodePort that is NOT used yet
