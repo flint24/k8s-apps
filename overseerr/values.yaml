@@ -1,0 +1,15 @@
+image:
+  repository: ghcr.io/sct/overseerr
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 5055
+  nodePort: 30893
+
+persistence:
+  enabled: true
+  path: /mnt/Father/downloads/overseerr
+
+timezone: Europe/Berlin
