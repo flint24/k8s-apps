@@ -1,18 +1,45 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: overseerr
-  namespace: argocd
+  namespace: media
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/flint24/k8s-apps.git
-    targetRevision: main
-    path: overseerr
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: media
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: overseerr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: overseerr
+    spec:
+      containers:
+        - name: overseerr
+          image: ghcr.io/sct/overseerr:latest
+          ports:
+            - containerPort: 5055
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+          env:
+            - name: TZ
+              value: Europe/Berlin
+      volumes:
+        - name: config
+          hostPath:
+            path: /mnt/Father/downloads/overseerr
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: overseerr
+  namespace: media
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: overseerr
+  ports:
+    - port: 5055
+      targetPort: 5055
+      nodePort: 30893
