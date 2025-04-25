@@ -18,20 +18,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
-            - containerPort: 8787
-          env:
-            - name: TZ
-              value: UTC
+            - containerPort: 8080
           volumeMounts:
-            - name: readeck
-              mountPath: /readeck
+            - name: config
+              mountPath: /config
             - name: downloads
               mountPath: /downloads
+            - name: watch
+              mountPath: /watch
       volumes:
-        - name: readeck
+        - name: config
           persistentVolumeClaim:
-            claimName: readeck-config
+            claimName: {{ .Values.persistence.config.existingClaim }}
         - name: downloads
           hostPath:
-            path: {{ .Values.persistence.downloads.path }}
-            type: Directory
+            path: {{ .Values.persistence.downloads.hostPath }}
+        - name: watch
+          hostPath:
+            path: {{ .Values.persistence.watch.hostPath }}
