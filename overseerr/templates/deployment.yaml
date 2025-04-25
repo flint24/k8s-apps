@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: overseerr
+  namespace: media
 spec:
   replicas: 1
   selector:
@@ -17,15 +18,14 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 5055
+            - containerPort: {{ .Values.service.port }}
           env:
             - name: TZ
-              value: "{{ .Values.timezone }}"
+              value: Europe/Berlin
           volumeMounts:
             - name: config
-              mountPath: /app/config
+              mountPath: {{ .Values.persistence.config.mountPath }}
       volumes:
         - name: config
-          hostPath:
-            path: {{ .Values.persistence.path }}
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: overseerr-config

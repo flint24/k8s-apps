@@ -9,7 +9,8 @@ service:
   nodePort: 30893
 
 persistence:
-  enabled: true
-  path: /mnt/Father/downloads/overseerr
-
-timezone: Europe/Berlin
+  config:
+    enabled: true
+    storageClass: longhorn-2replicas
+    size: 5Gi
+    mountPath: /app/config
