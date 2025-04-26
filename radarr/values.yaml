@@ -8,14 +8,15 @@ service:
   port: 7878
   nodePort: 30788
 
-env:
-  PGID: 100
-  PUID: 1000
-  TZ: Europe/Berlin
-
 persistence:
   config:
     enabled: true
     existingClaim: radarr-config
+    size: 5Gi
 
 resources: {}
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
