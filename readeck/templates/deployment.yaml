@@ -17,6 +17,6 @@ spec:
         kubernetes.io/hostname: node1
       containers:
         - name: readeck
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: nginx:stable
           ports:
             - containerPort: 80
