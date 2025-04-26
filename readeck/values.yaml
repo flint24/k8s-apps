@@ -1,5 +1,5 @@
 image:
-  repository: readeck-arm64
+  repository: localhost/readeck-arm64
   tag: latest
   pullPolicy: Never
 
