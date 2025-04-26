@@ -20,10 +20,3 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 80
-          volumeMounts:
-            - name: config
-              mountPath: /readeck
-      volumes:
-        - name: config
-          persistentVolumeClaim:
-            claimName: readeck-config
