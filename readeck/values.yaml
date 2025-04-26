@@ -1,7 +1,7 @@
 image:
   repository: readeck-arm64
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Never
 
 service:
   type: NodePort
