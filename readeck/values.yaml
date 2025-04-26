@@ -5,3 +5,8 @@ image:
 service:
   port: 80
   nodePort: 30897
+
+persistence:
+  enabled: true
+  existingClaim: readeck-config
+  mountPath: /readeck

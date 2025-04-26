@@ -17,11 +17,12 @@ spec:
         - name: readeck
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.service.port }}
+          command: ["/bin/sh", "-c", "nginx -g 'daemon off;' -c /etc/nginx/nginx.conf"]
           volumeMounts:
             - name: config
-              mountPath: /readeck
+              mountPath: "{{ .Values.persistence.mountPath }}"
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: readeck-config
+            claimName: "{{ .Values.persistence.existingClaim }}"
