@@ -1,7 +1,7 @@
 image:
-  repository: nginx
-  tag: stable
+  repository: readeck/readeck
+  tag: latest
 
 service:
-  port: 80
+  port: 8080
   nodePort: 30897
