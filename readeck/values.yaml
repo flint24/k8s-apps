@@ -3,5 +3,5 @@ image:
   tag: stable
 
 service:
-  port: 8080
+  port: 80
   nodePort: 30897
