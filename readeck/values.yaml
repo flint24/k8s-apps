@@ -1,8 +1,16 @@
 image:
-  repository: manthanp/readeck
+  repository: readeck-arm64
   tag: latest
+  pullPolicy: Never
 
 service:
-  port: 8080
-  targetPort: 8080
-  nodePort: 30897
+  type: NodePort
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30897
+
+persistence:
+  enabled: false
+
+resources: {}
