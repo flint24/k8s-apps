@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/readeck/readeck
-  tag: latest
+  tag: 1.0.0
 
 service:
   port: 8080
