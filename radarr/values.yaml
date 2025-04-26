@@ -1,0 +1,21 @@
+image:
+  repository: linuxserver/radarr
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 7878
+  nodePort: 30788
+
+env:
+  PGID: 100
+  PUID: 1000
+  TZ: Europe/Berlin
+
+persistence:
+  config:
+    enabled: true
+    existingClaim: radarr-config
+
+resources: {}
