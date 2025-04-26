@@ -13,16 +13,17 @@ spec:
       labels:
         app.kubernetes.io/name: readeck
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: node1
       containers:
         - name: readeck
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - containerPort: {{ .Values.service.port }}
-          command: ["/bin/sh", "-c", "nginx -g 'daemon off;' -c /etc/nginx/nginx.conf"]
+            - containerPort: 80
           volumeMounts:
             - name: config
-              mountPath: "{{ .Values.persistence.mountPath }}"
+              mountPath: /readeck
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: "{{ .Values.persistence.existingClaim }}"
+            claimName: readeck-config
