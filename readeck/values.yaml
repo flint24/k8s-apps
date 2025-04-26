@@ -1,5 +1,5 @@
 image:
-  repository: readeck/readeck
+  repository: manthanp/readeck
   tag: latest
 
 service:
