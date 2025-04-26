@@ -1,0 +1,7 @@
+image:
+  repository: ghcr.io/readeck/readeck
+  tag: 1.0.0
+
+service:
+  port: 8080
+  nodePort: 30897
