@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: readeck
+  namespace: media
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: readeck.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: readeck
+                port:
+                  number: 80
