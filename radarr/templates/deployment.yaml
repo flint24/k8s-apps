@@ -7,33 +7,31 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: radarr
+      app: radarr
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: radarr
+        app: radarr
     spec:
       containers:
-        - name: radarr
-          image: linuxserver/radarr:latest
-          ports:
-            - containerPort: 7878
-          volumeMounts:
-            - name: config
-              mountPath: /config
-            - name: media
-              mountPath: /data
-          startupProbe:
-            httpGet:
-              path: /
-              port: 7878
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            failureThreshold: 10
-      volumes:
+      - name: radarr
+        image: linuxserver/radarr:latest
+        ports:
+        - containerPort: 7878
+        volumeMounts:
         - name: config
-          persistentVolumeClaim:
-            claimName: radarr-config
-        - name: media
-          hostPath:
-            path: /mnt/Father/downloads/radarr
+          mountPath: /config
+        - name: downloads
+          mountPath: /downloads
+        command:
+        - /bin/bash
+        - -c
+        - |
+          echo "0 3 * * 1 cp /config/Backups/scheduled/* /downloads/Backups/" | crontab - &&           service cron start &&           exec /init
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: radarr-config-pvc
+      - name: downloads
+        persistentVolumeClaim:
+          claimName: downloads-pvc
