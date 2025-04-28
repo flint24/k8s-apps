@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-data-nfs-pv
+spec:
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 192.168.0.100   # <-- change this to your real NFS server IP
+    path: /exports/nextcloud-data   # <-- change this to your real NFS export path
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-data
+  namespace: nextcloud
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+  volumeName: nextcloud-data-nfs-pv
