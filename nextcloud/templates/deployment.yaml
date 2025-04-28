@@ -12,8 +12,6 @@ spec:
       labels:
         app.kubernetes.io/name: nextcloud
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
       securityContext:
         fsGroup: 100
       containers:
