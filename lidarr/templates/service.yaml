@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "lidarr.fullname" . }}
-  labels:
-    {{- include "lidarr.labels" . | nindent 4 }}
+  name: lidarr
 spec:
-  type: {{ .Values.service.main.type }}
-  ports:
-    - name: http
-      port: {{ .Values.service.main.ports.http.port }}
-      targetPort: 8686
-      nodePort: {{ .Values.service.main.ports.http.nodePort }}
+  type: NodePort
   selector:
-    {{- include "lidarr.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: lidarr
+  ports:
+    - port: 8686
+      targetPort: 8686
+      protocol: TCP
+      nodePort: 30886
