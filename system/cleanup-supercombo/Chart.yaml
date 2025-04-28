@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cleanup-supercombo
+description: A CronJob to clean up stuck Kubernetes pods
+type: application
+version: 0.1.0
+appVersion: "1.0"

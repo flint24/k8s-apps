@@ -1,0 +1,5 @@
+schedule: "0 * * * *" # every hour
+image:
+  repository: bitnami/kubectl
+  tag: latest
+  pullPolicy: IfNotPresent
