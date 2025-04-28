@@ -31,12 +31,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: data
-              mountPath: /data
+            - name: downloads   # <-- Corrected!
+              mountPath: /downloads   # <-- Corrected!
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: sabnzbd-config
-        - name: data
+        - name: downloads       # <-- Match this name!
           hostPath:
             path: /mnt/Father/downloads/sabnzbd
