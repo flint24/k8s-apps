@@ -6,18 +6,16 @@ image:
   pullPolicy: IfNotPresent
 
 env:
-  PUID: 1000
-  PGID: 100
-  TZ: Europe/Berlin
+  DB_DATABASE_NAME: postgres
   DB_HOSTNAME: my-app-postgresql.default.svc.cluster.local
+  DB_PASSWORD: 5p8EFuAZuc
   DB_PORT: 5432
   DB_USERNAME: postgres
-  DB_PASSWORD: 5P8EFuAZuc
-  DB_DATABASE_NAME: postgres
-  REDIS_HOSTNAME: argocd-redis.argocd.svc.cluster.local
-  REDIS_PORT: 6379
-  IMMICH_MACHINE_LEARNING_URL: http://127.0.0.1:3003
   IMMICH_ENABLE_MACHINE_LEARNING: false
+  IMMICH_MACHINE_LEARNING_URL: http://127.0.0.1:3003
+  PGID: 100
+  PUID: 1000
+  TZ: Europe/Berlin
 
 service:
   main:
