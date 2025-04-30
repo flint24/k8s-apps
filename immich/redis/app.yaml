@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    chart: redis
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 20.12.1
+    chart: redis
+    targetRevision: 20.11.5
     helm:
       values: |
         architecture: standalone
