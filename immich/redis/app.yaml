@@ -10,22 +10,8 @@ spec:
     chart: redis
     targetRevision: 20.11.5
     helm:
-      values: |
-        architecture: standalone
-        auth:
-          enabled: false
-        master:
-          persistence:
-            enabled: true
-            storageClass: longhorn-2replicas
-            size: 2Gi
-            accessModes:
-              - ReadWriteOnce
-        replica:
-          replicaCount: 0
-        service:
-          type: ClusterIP
-          port: 6379
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: media
