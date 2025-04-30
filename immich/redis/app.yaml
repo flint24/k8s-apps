@@ -6,12 +6,10 @@ metadata:
 spec:
   project: default
   source:
+    repoURL: https://charts.bitnami.com/bitnami
     chart: redis
     targetRevision: 20.12.1
-    repoURL: https://charts.bitnami.com/bitnami
     helm:
-      valueFiles:
-        - values.yaml
       values: |
         architecture: standalone
         auth:
@@ -28,6 +26,8 @@ spec:
         service:
           type: ClusterIP
           port: 6379
+        image:
+          tag: 7.2.4-debian-11-r0
   destination:
     server: https://kubernetes.default.svc
     namespace: media
