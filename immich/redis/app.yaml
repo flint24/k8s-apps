@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
     chart: redis
-    targetRevision: 19.4.3
+    targetRevision: latest
+    repoURL: https://charts.bitnami.com/bitnami
     helm:
       valueFiles:
         - values.yaml
