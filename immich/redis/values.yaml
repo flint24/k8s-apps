@@ -1,0 +1,11 @@
+auth:
+  enabled: true
+  password: immichredispass  # <-- use a secure password if exposing outside
+
+architecture: standalone
+
+master:
+  persistence:
+    enabled: true
+    storageClass: longhorn-2replicas
+    size: 1Gi

@@ -16,6 +16,8 @@ env:
   PGID: 100
   PUID: 1000
   TZ: Europe/Berlin
+  REDIS_HOSTNAME: immich-redis-master.media.svc.cluster.local
+  REDIS_PORT: 6379
 
 service:
   main:
