@@ -12,8 +12,6 @@ spec:
       labels:
         app.kubernetes.io/name: immich
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: node1
       securityContext:
         fsGroup: 100
       containers:
@@ -21,22 +19,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: PUID
-              value: "{{ .Values.env.PUID }}"
-            - name: PGID
-              value: "{{ .Values.env.PGID }}"
-            - name: TZ
-              value: "{{ .Values.env.TZ }}"
-            - name: DB_URL
-              value: "{{ .Values.env.DB_URL }}"
-            - name: REDIS_HOSTNAME
-              value: "{{ .Values.env.REDIS_HOSTNAME }}"
-            - name: REDIS_PORT
-              value: "{{ .Values.env.REDIS_PORT }}"
-            - name: IMMICH_MACHINE_LEARNING_URL
-              value: "{{ .Values.env.IMMICH_MACHINE_LEARNING_URL }}"
-            - name: IMMICH_ENABLE_MACHINE_LEARNING
-              value: "{{ .Values.env.IMMICH_ENABLE_MACHINE_LEARNING }}"
+{{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+{{- end }}
           ports:
             - containerPort: 3001
               name: http
