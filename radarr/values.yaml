@@ -11,8 +11,8 @@ service:
 persistence:
   config:
     enabled: true
-    existingClaim: radarr-config
     size: 5Gi
+    storageClass: longhorn-2replicas
 
 resources: {}
 
