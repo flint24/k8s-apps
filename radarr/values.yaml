@@ -22,13 +22,20 @@ securityContext:
   runAsGroup: 1000
   fsGroup: 1000
 
-# Remove node pinning
 affinity: {}
 nodeSelector: {}
 tolerations: []
 
-# Disable probes temporarily to prevent crash loops
 livenessProbe:
-  enabled: false
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 6
+
 readinessProbe:
-  enabled: false
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
