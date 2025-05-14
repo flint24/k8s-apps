@@ -5,24 +5,18 @@ image:
 
 service:
   type: NodePort
-  port: 8787
+  port: 7878
   nodePort: 30788
 
 persistence:
   config:
     enabled: true
-    size: 5Gi
-    storageClass: longhorn-2replicas
-    accessMode: ReadWriteOnce
+    type: hostPath
+    hostPath: /mnt/Father/downloads/radarr/config
 
 resources: {}
 
 securityContext:
   runAsUser: 1000
-  runAsGroup: 100
+  runAsGroup: 1000
   fsGroup: 1000
-
-livenessProbe:
-  enabled: false
-readinessProbe:
-  enabled: false
