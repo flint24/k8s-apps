@@ -22,20 +22,7 @@ securityContext:
   runAsGroup: 1000
   fsGroup: 1000
 
-affinity: {}
-nodeSelector: {}
-tolerations: []
-
 livenessProbe:
-  enabled: true
-  initialDelaySeconds: 60
-  periodSeconds: 20
-  timeoutSeconds: 5
-  failureThreshold: 6
-
+  enabled: false
 readinessProbe:
-  enabled: true
-  initialDelaySeconds: 30
-  periodSeconds: 10
-  timeoutSeconds: 5
-  failureThreshold: 3
+  enabled: false
