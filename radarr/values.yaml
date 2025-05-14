@@ -13,6 +13,7 @@ persistence:
     enabled: true
     size: 5Gi
     storageClass: longhorn-2replicas
+    accessMode: ReadWriteOnce
 
 resources: {}
 
@@ -20,3 +21,14 @@ securityContext:
   runAsUser: 1000
   runAsGroup: 1000
   fsGroup: 1000
+
+# Remove node pinning
+affinity: {}
+nodeSelector: {}
+tolerations: []
+
+# Disable probes temporarily to prevent crash loops
+livenessProbe:
+  enabled: false
+readinessProbe:
+  enabled: false
