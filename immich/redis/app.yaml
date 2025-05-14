@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: immich-redis
+  name: immich
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: redis
-    targetRevision: 20.12.0
+    repoURL: oci://ghcr.io/immich-app/immich-charts
+    chart: immich
+    targetRevision: 0.9.3
     helm:
       valueFiles:
         - values.yaml

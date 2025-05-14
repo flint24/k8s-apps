@@ -1,19 +1,29 @@
-architecture: standalone
-
-auth:
+redis:
   enabled: false
 
-master:
-  persistence:
+env:
+  REDIS_HOSTNAME: immich-redis.media.svc.cluster.local
+  REDIS_PORT: 6379
+
+ingress:
+  enabled: false
+
+# Use Longhorn for config
+persistence:
+  config:
     enabled: true
-    storageClass: longhorn-2replicas
-    size: 2Gi
-    accessModes:
-      - ReadWriteOnce
+    existingClaim: immich-config
 
-replica:
-  replicaCount: 0
+# Use hostPath for photos
+immich:
+  server:
+    volumes:
+      - name: photos
+        hostPath:
+          path: /mnt/Father/Pics
+    volumeMounts:
+      - mountPath: /usr/src/app/upload
+        name: photos
 
-service:
-  type: ClusterIP
-  port: 6379
+ml:
+  enabled: false
