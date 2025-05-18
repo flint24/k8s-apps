@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: makneta/stubby
+  repository: ghcr.io/dnscrypt/stubby
   tag: latest
 
 service:
@@ -9,7 +9,6 @@ service:
   targetPort: 8053
   type: NodePort
   nodePort: 30053
-
 resources: {}
 
 nodeSelector: {}
