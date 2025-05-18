@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: getdnsapi/stubby
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 53
+
+config:
+  upstream_recursive_servers:
+    - address_data: 1.1.1.1
+      tls_auth_name: "cloudflare-dns.com"
+      tls_port: 853
+    - address_data: 9.9.9.9
+      tls_auth_name: "dns.quad9.net"
+      tls_port: 853

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stubby
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: stubby
+  template:
+    metadata:
+      labels:
+        app: stubby
+    spec:
+      containers:
+        - name: stubby
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 53
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/local/etc/stubby
+      volumes:
+        - name: config-volume
+          configMap:
+            name: stubby-config

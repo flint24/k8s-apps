@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stubby-config
+data:
+  stubby.yml: |
+    resolution_type: GETDNS_RESOLUTION_STUB
+    dns_transport_list:
+      - GETDNS_TRANSPORT_TLS
+    tls_authentication: GETDNS_AUTHENTICATION_REQUIRED
+    round_robin_upstreams: 1
+    idle_timeout: 10000
+    listen_addresses:
+      - 0.0.0.0@53
+    upstream_recursive_servers:
+    {{- range .Values.config.upstream_recursive_servers }}
+      - address_data: {{ .address_data }}
+        tls_auth_name: "{{ .tls_auth_name }}"
+        tls_port: {{ .tls_port }}
+    {{- end }}
