@@ -1,13 +1,13 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/aaronfay/stubby
+  repository: makneta/stubby
   tag: latest
-  pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
   port: 8053
+  targetPort: 8053
+  type: NodePort
   nodePort: 30053
 
 resources: {}
