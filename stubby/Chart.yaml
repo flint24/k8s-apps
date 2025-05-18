@@ -1,5 +1,4 @@
 apiVersion: v2
 name: stubby
-description: Stubby DoT DNS resolver
 version: 0.1.0
-appVersion: 0.4.0
+appVersion: "0.4.3"

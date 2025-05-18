@@ -3,13 +3,9 @@ kind: Service
 metadata:
   name: stubby
 spec:
-  type: NodePort
+  selector:
+    app: stubby
   ports:
-    - port: 53
-      targetPort: 53
-      protocol: UDP
-      nodePort: 30530
-    - port: 53
-      targetPort: 53
-      protocol: TCP
-      nodePort: 30530
+  - protocol: TCP
+    port: 8053
+    targetPort: 8053

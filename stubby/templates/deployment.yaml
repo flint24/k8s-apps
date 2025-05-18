@@ -13,14 +13,16 @@ spec:
         app: stubby
     spec:
       containers:
-        - name: stubby
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          ports:
-            - containerPort: 53
-          volumeMounts:
-            - name: config-volume
-              mountPath: /usr/local/etc/stubby
+      - name: stubby
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        args: ["-C", "/etc/stubby/stubby.yml"]
+        ports:
+        - containerPort: 8053
+        volumeMounts:
+        - name: config
+          mountPath: /etc/stubby/stubby.yml
+          subPath: stubby.yml
       volumes:
-        - name: config-volume
-          configMap:
-            name: stubby-config
+      - name: config
+        configMap:
+          name: stubby-config

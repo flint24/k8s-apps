@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/flint24/k8s-apps.git
+    repoURL: 'git@github.com:flint24/k8s-apps.git'
     targetRevision: HEAD
     path: stubby
   destination:
