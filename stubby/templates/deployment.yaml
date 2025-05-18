@@ -13,16 +13,9 @@ spec:
         app: stubby
     spec:
       containers:
-      - name: stubby
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        args: ["-C", "/etc/stubby/stubby.yml"]
-        ports:
-        - containerPort: 8053
-        volumeMounts:
-        - name: config
-          mountPath: /etc/stubby/stubby.yml
-          subPath: stubby.yml
-      volumes:
-      - name: config
-        configMap:
-          name: stubby-config
+        - name: stubby
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8053
+              name: dns-tls

@@ -1,24 +1,21 @@
+replicaCount: 1
+
 image:
-  repository: getdnsapi/stubby
+  repository: ghcr.io/getdnsapi/stubby
   tag: latest
   pullPolicy: IfNotPresent
 
-replicaCount: 1
+service:
+  type: NodePort
+  port: 8053
+  nodePort: 30053
 
 resources: {}
 
-service:
-  type: ClusterIP
-  port: 8053
+nodeSelector: {}
 
-stubbyConfig: |
-  resolution_type: GETDNS_RESOLUTION_STUB
-  dns_transport_list:
-    - GETDNS_TRANSPORT_TLS
-  tls_authentication: GETDNS_AUTHENTICATION_REQUIRED
-  round_robin_upstreams: 1
-  upstream_recursive_servers:
-    - address_data: 1.1.1.1
-      tls_auth_name: "cloudflare-dns.com"
-    - address_data: 9.9.9.9
-      tls_auth_name: "dns.quad9.net"
+tolerations: []
+
+affinity: []
+
+# Optional extra args or config mount can go here

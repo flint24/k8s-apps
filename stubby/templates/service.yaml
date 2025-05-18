@@ -3,9 +3,11 @@ kind: Service
 metadata:
   name: stubby
 spec:
+  type: NodePort
+  ports:
+    - port: 8053
+      targetPort: 8053
+      protocol: TCP
+      nodePort: {{ .Values.service.nodePort }}
   selector:
     app: stubby
-  ports:
-  - protocol: TCP
-    port: 8053
-    targetPort: 8053

@@ -1,4 +1,6 @@
 apiVersion: v2
 name: stubby
+description: Stubby DNS-over-TLS resolver
+type: application
 version: 0.1.0
-appVersion: "0.4.3"
+appVersion: "latest"
