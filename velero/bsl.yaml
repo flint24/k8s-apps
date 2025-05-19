@@ -1,8 +1,0 @@
-apiVersion: velero.io/v1
-kind: BackupStorageLocation
-metadata:
-  name: velero-local
-  namespace: velero
-spec:
-  provider: velero.io/noop
-  accessMode: ReadWrite

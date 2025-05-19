@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup-stuck-pods
+  namespace: media
+spec:
+  schedule: "0 * * * *"  # Every hour
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cleanup
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  #!/bin/sh
+                  NAMESPACE=media
+                  # List all deployments in namespace
+                  APPS=$(kubectl get deploy -n $NAMESPACE -o jsonpath='{.items[*].metadata.name}')
+                  for APP in $APPS; do
+                    # Get all pods for this app, sorted by age (newest last)
+                    PODS=$(kubectl get pods -n $NAMESPACE -l app.kubernetes.io/name=$APP --sort-by=.metadata.creationTimestamp -o jsonpath='{.items[*].metadata.name}')
+                    COUNT=$(echo $PODS | wc -w)
+                    if [ "$COUNT" -gt 1 ]; then
+                      echo "Found $COUNT pods for $APP, cleaning old ones..."
+                      for POD in $PODS; do
+                        if [ "$POD" != "${PODS##* }" ]; then
+                          echo "Deleting old pod: $POD"
+                          kubectl delete pod "$POD" -n $NAMESPACE
+                        fi
+                      done
+                    fi
+                  done
+          restartPolicy: OnFailure
+          serviceAccountName: default
