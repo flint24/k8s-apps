@@ -17,3 +17,14 @@ backupStorageLocation:
 volumeSnapshotLocation:
   name: default
   provider: velero.io/noop
+
+service:
+  main:
+    enabled: true
+    type: NodePort
+    ports:
+      - port: 8085
+        targetPort: 8085
+        protocol: TCP
+        name: http
+        nodePort: 30985  # Change if needed
