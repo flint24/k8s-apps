@@ -1,28 +1,48 @@
-deployBackupStorageLocation: false
-deployVolumeSnapshotLocation: false
+initContainers:
+  - name: velero-plugin-for-kopia
+    image: velero/velero-plugin-for-kopia:v1.6.0
+    volumeMounts:
+      - mountPath: /plugins
+        name: plugins
 
 configuration:
-  backupStorageLocations: []
-  volumeSnapshotLocations: []
+  backupStorageLocation:
+    name: velero-local
+    provider: velero.io/kopia
+    bucket: velero-local-bucket
+    default: true
+    config:
+      path: /mnt/velero
+  volumeSnapshotLocation:
+    name: default
+    provider: velero.io/noop
 
-velero:
-  credentials:
-    useSecret: false
-  deployNodeAgent: true
-  snapshotsEnabled: false
+credentials:
+  useSecret: false
 
-  initContainers:
-    - name: velero-plugin-for-file-system
-      image: velero/velero-plugin-for-file-system:v0.1.2
-      volumeMounts:
-        - mountPath: /target
-          name: plugins
+deployNodeAgent: false
 
-  extraVolumes:
-    - name: velero-backup
-      persistentVolumeClaim:
-        claimName: velero-backup-pvc
+snapshotsEnabled: false
 
-  extraVolumeMounts:
-    - name: velero-backup
-      mountPath: /mnt/velero
+volumes:
+  - name: plugins
+    emptyDir: {}
+  - name: velero-backups
+    hostPath:
+      path: /mnt/Mother/downloads/velero/
+      type: Directory
+
+extraVolumeMounts:
+  - mountPath: /mnt/velero
+    name: velero-backups
+
+env:
+  - name: VELERO_SCRATCH_DIR
+    value: /scratch
+  - name: VELERO_PLUGIN_DIR
+    value: /plugins
+
+metrics:
+  enabled: true
+
+resources: {}

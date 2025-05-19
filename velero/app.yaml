@@ -1,4 +1,3 @@
-
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:flint24/k8s-apps.git
+    repoURL: https://github.com/flint24/k8s-apps.git
     targetRevision: HEAD
     path: velero
     helm:
